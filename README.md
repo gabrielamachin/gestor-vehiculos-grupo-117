@@ -8,6 +8,11 @@
 
 Aplicación full-stack que permite al dueño de un vehículo registrar todos los gastos asociados al auto y obtener indicadores clave para la toma de decisiones financieras.
 
+## Grupo 117 - Integrantes:
+Anahi Betancort - anahi.betancort@gmail.com
+Camila Rissi - rissicamila07@gmail.com
+Gabriela Machin - gabrielamachin@gmail.com
+
 ### Funcionalidades principales
 
 - **Costo real por km**: Suma de todos los gastos ÷ kilómetros recorridos
@@ -19,6 +24,12 @@ Aplicación full-stack que permite al dueño de un vehículo registrar todos los
 
 - **Usuario propietario**: Registra vehículos y gastos, visualiza indicadores
 - **Sistema**: Genera alertas y cálculos automáticos
+
+---
+
+## Documentación detallada
+
+La documentación más completa del proyecto se encuentra en la carpeta [docs](docs/), donde se incluyen el alcance, la arquitectura, el stack tecnológico, la viabilidad, el plan de trabajo y otros aspectos relevantes del desarrollo.
 
 ---
 
@@ -40,4 +51,4 @@ Aplicación full-stack que permite al dueño de un vehículo registrar todos los
 
 ### Infraestructura
 - A definir entre Render y Railway.
-- GitHub Actions — CI/CD
+- GitHub Actions — CI/CD.
