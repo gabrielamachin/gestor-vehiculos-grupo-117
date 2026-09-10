@@ -46,38 +46,11 @@
 
 ---
 
-## Decisión de despliegue
+## Despliegue e infraestructura
 
-Actualmente el equipo se encuentra **evaluando dos opciones** para el despliegue del proyecto: **Render** y **Railway**. Ambas plataformas ofrecen free tiers que se ajustan a las necesidades del proyecto, pero presentan características y limitaciones diferentes que se deben analizar con más detalle antes de tomar una decisión final.
+La infraestructura del proyecto se centraliza íntegramente en **Render**, simplificando la operación y el monitoreo:
 
-### Opción A: Render (Todo en una plataforma)
-
-**Descripción**: Render permite alojar el frontend (Static Site), el backend (Web Service) y la base de datos (PostgreSQL) en una misma plataforma.
-
-**Ventajas**:
-- Centralización de todos los servicios en un solo proveedor
-- Comunicación interna entre backend y base de datos (menor latencia)
-- Un único dashboard para monitorear todos los componentes
-- Auto-deploy desde GitHub para todos los servicios
-- Documentación clara y actualizada
-
-**Limitaciones**:
-- El free tier del Web Service ya no está disponible después de 15 minutos de inactividad
-- 512 MB de RAM y 1 vCPU para el backend (de todas maneras se considera suficiente para el proyecto)
-- 1 GB de almacenamiento para PostgreSQL en free tier
-
-### Opción B: Railway (Backend + BD) + Vercel/Netlify (Frontend)
-
-**Descripción**: Railway aloja el backend y la base de datos, mientras que Vercel o Netlify alojan el frontend (Static Site con CDN global).
-
-**Ventajas**:
-- Railway ofrece un free tier generoso para backend y PostgreSQL
-- Vercel/Netlify tienen CDN global para el frontend (mejor rendimiento)
-- Cada plataforma está especializada en su área (Vercel para frontend, Railway para backend)
-- Mayor flexibilidad para escalar cada componente por separado
-
-**Limitaciones**:
-- Dos plataformas diferentes (más complejidad en configuración y monitoreo)
-- Mayor latencia entre frontend y backend (tráfico entre nubes diferentes)
-- CORS debe configurarse con dominios de ambas plataformas
-- Más variables de entorno para gestionar
+- **Frontend:** Render Static Site con auto-deploy desde la rama principal del repositorio de GitHub.
+- **Backend:** Render Web Service ejecutando FastAPI mediante entorno virtual de Python y servidor ASGI Uvicorn.
+- **Base de Datos:** PostgreSQL administrado provisto por Render (15+), con conexión interna privada entre el Web Service y la base de datos para minimizar la latencia de red.
+- **Estrategia ante el Free Tier (Spin Down):** Al operar sobre instancias de nivel gratuito que entran en reposo tras 15 minutos de inactividad, se implementará un endpoint liviano de `/health` consumido periódicamente para asegurar disponibilidad inmediata durante las demostraciones.
