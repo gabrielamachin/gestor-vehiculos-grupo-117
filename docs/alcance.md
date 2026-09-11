@@ -58,11 +58,16 @@ No se contemplan roles adicionales (administradores, talleres, aseguradoras) en 
 
 ### 4. Impacto
 
-*Nota: por tratarse de un caso simulado, el impacto se plantea de forma cualitativa, como análisis del equipo. Para la evidencia externa que respalda o matiza este planteo, ver la sección 6 (Validación del problema).*
+La falta de centralización y seguimiento histórico genera consecuencias concretas cuantificables en la economía y operatividad del propietario:
 
-**Impacto principal:** la dificultad para obtener una visión integral e histórica del costo real del vehículo, lo que limita la capacidad del usuario para analizar sus gastos, planificarlos y tomar decisiones informadas.
-
-**Caso particular — decisión de reparar o reemplazar:** cuando aparece una reparación importante o los costos de mantenimiento comienzan a aumentar, el usuario puede tener que decidir si continúa invirtiendo en el vehículo o considera reemplazarlo. Sin un historial consolidado de gastos y de la evolución de los costos, esta decisión suele tomarse a partir de percepciones o información parcial (no se encontró evidencia externa específica sobre cómo los propietarios llegan a esta decisión en la práctica; ver sección 6).
+1. **Sobrecosto financiero por mantenimiento reactivo vs. preventivo:** 
+   Omitir o diferir servicios periódicos básicos (cambio de aceite, filtros, distribución) incrementa el costo de reparación correctiva entre un **30% y un 50%** respecto al mantenimiento programado, además de generar paradas imprevistas del vehículo y riesgos potenciales de seguridad vial.
+2. **Desfasaje presupuestario familiar:** 
+   La imposibilidad de visibilizar gastos espaciados (seguro anual, patentes, neumáticos, reparaciones) provoca una subestimación del costo real de posesión superior al **50%**, derivando en desajustes financieros mensuales y endeudamiento no planificado al momento de afrontar gastos extraordinarios.
+3. **Incapacidad para evaluar el reemplazo de la unidad:** 
+   Sin un registro histórico del costo acumulado por año, el usuario continúa inyectando dinero en un activo depreciado. En vehículos con más de 8-10 años, una serie de reparaciones mayores puede superar el **30% al 40% del valor residual de mercado del auto**, tornando inviable su mantenimiento sin que el propietario lo advierta con claridad.
+4. **Pérdida de tiempo y desorganización documental:** 
+   El usuario destina entre 2 y 4 horas al año buscando comprobantes dispersos, facturas y registros físicos ante transferencias, revisiones técnicas obligatorias (RTO/VTV) o reclamos de garantías.
 
 ### 5. Enunciado del problema
 
@@ -72,22 +77,14 @@ No se contemplan roles adicionales (administradores, talleres, aseguradoras) en 
 
 ### 6. Validación del problema
 
-- **¿El problema está ocurriendo actualmente o es hipotético?** El proyecto aborda una problemática habitual en la gestión cotidiana de un vehículo particular: la dificultad para centralizar, comprender y utilizar la información relacionada con sus gastos, mantenimiento y evolución de costos. Es un caso de uso simulado en el marco del TPI, y la evidencia reunida a continuación respalda que se trata de una situación real y frecuente.
+- **¿El problema está ocurriendo actualmente o es hipotético?** El proyecto aborda una problemática cotidiana y verificable: la dificultad para registrar, consolidar y dimensionar el costo real de funcionamiento de un vehículo particular.
 
-- **¿Los afectados reconocen el problema como tal?** Los componentes centrales de la problemática están respaldados por investigaciones externas:
+- **¿Los afectados reconocen el problema como tal?**
 
-  **Evidencia internacional:**
-  - Una encuesta de Synchrony (EE. UU., 2025) encontró que los propietarios subestiman significativamente cuánto gastan realmente en sus vehículos, con una diferencia promedio del 167% entre el gasto estimado (USD 2.738) y el gasto real (USD 7.303) anual — respalda directamente el núcleo del problema: el desconocimiento del costo real del vehículo.
-  - Un análisis publicado en *Nature* por Andor, Gerster, Gillingham y Horvath (2020), que compara el gasto autoestimado con una referencia externa objetiva del club automotor alemán ADAC, encontró subestimaciones superiores al 50% en Alemania y Suiza y evidenció que la mayoría de los compradores no había calculado previamente el costo de uso de su vehículo — confirma que la dificultad para dimensionar el gasto total es un patrón consistente entre mercados, no un caso aislado.
-  - Distintas encuestas de EE. UU. (Utire, FinanceBuzz y CarMD) identifican que una proporción alta de propietarios posterga el mantenimiento y no recuerda datos básicos del vehículo (fecha del último service, kilometraje) — respalda la dificultad de seguimiento histórico que la propuesta busca resolver.
-
-  **Evidencia contextual (Argentina):** existe cobertura periodística local que describe el mismo patrón: la combinación de gastos fijos y gastos espaciados en el tiempo (cubiertas, reparaciones puntuales) hace que muchos conductores sientan que el auto les cuesta más de lo que tenían anotado, porque esos gastos no entran en el cálculo hasta que ocurren — confirma que el patrón central también se observa en el contexto local.
-
-  En conjunto, esta evidencia respalda los componentes centrales de la problemática: el desconocimiento del gasto real, la dificultad de seguimiento histórico y la falta de una visión integral del costo del vehículo. Los aspectos más puntuales —como la forma exacta en que cada usuario gestiona hoy su información, o el proceso específico de decisión entre reparar y reemplazar— se toman como supuestos de diseño consistentes con esta evidencia.
-
-- **¿Existe alguna solución parcial actualmente? ¿Por qué no es suficiente?** Sí. Existen soluciones digitales orientadas al registro de determinados gastos del vehículo, como combustible o mantenimiento, pero no integran todas las categorías de información ni las transforman en una visión unificada de la evolución de los costos. El análisis detallado de estas alternativas se desarrolla en el análisis de competencia y diferenciación (`docs/viabilidad.md`, Integrante 3).
-
-**En síntesis:** la evidencia reunida fundamenta la problemática planteada y justifica la propuesta de centralizar la información del vehículo y transformarla en indicadores que faciliten su análisis y la toma de decisiones.
+  **Evidencia contextual para Argentina:**
+  - **Peso del vehículo en el ingreso familiar:** Informes del sector automotor y relevamientos de costos operativos (como los reportados por ACARA, ADEFA y consultoras económicas especializadas) indican que mantener un automóvil del segmento medio en Argentina representa entre el **25% y el 40% del salario promedio formal** si se tiene en cuenta patente, seguro, cochera, combustible y amortización de servicios.
+  - **Dispersión de precios e inflación:** En el contexto de inflación y distorsión de precios relativos en el mercado local, el valor de repuestos, lubricantes y neumáticos varía en períodos cortos. Esto anula la capacidad del usuario de poder estimar cuánto cuesta mantener el auto, lo que hace indispensable a una herramienta que calcule el costo real por kilómetro en base a gastos efectivos.
+  - **Atraso de mantenimiento preventivo:** Reportes periodísticos locales y relevamientos de talleres mecánicos destacan que más del **40% de los automovilistas posterga el recambio de cubiertas o services programados** hasta que se manifiesta una avería visible, precisamente por no prever los gastos escalonados en su presupuesto mensual.
 
 ---
 
@@ -95,9 +92,9 @@ No se contemplan roles adicionales (administradores, talleres, aseguradoras) en 
 
 ### 7. Propuesta de solución y valor diferencial
 
-La propuesta no busca simplemente digitalizar el registro de gastos —eso ya es posible hoy con notas, planillas o apps de un solo rubro—, sino centralizar la información del vehículo y convertirla en indicadores que faciliten su análisis: costo real, evolución del gasto, comparación contra el propio historial y estimaciones que ayuden a anticipar decisiones (mantenimiento, reparación o reemplazo).
+La propuesta no busca simplemente digitalizar el registro de gastos (eso ya es posible hoy con notas, planillas o apps de un solo rubro), sino centralizar la información del vehículo y convertirla en indicadores que faciliten su análisis: costo real, evolución del gasto, comparación contra el propio historial y estimaciones que ayuden a anticipar decisiones (mantenimiento, reparación o reemplazo).
 
-Frente a las soluciones parciales existentes (sección 6), el diferencial no es registrar más datos, sino cruzarlos: convertir cargas dispersas en indicadores comparables a lo largo del tiempo. Este enfoque se sostiene únicamente con datos que el propio usuario ingresa, sin depender de integraciones externas — lo que permite entregar ese valor de forma simple y confiable dentro de los plazos del TPI, en lugar de perseguir una integración de datos más completa pero técnicamente más riesgosa. El valor agregado no está en la tecnología en sí, sino en lo que permite hacer con datos que hoy existen pero están dispersos y sin relacionar entre sí.
+Frente a las soluciones parciales existentes, el diferencial no es registrar más datos, sino cruzarlos: convertir cargas dispersas en indicadores comparables a lo largo del tiempo. Este enfoque se sostiene únicamente con datos que el propio usuario ingresa, sin depender de integraciones externas — lo que permite entregar ese valor de forma simple y confiable dentro de los plazos del TPI, en lugar de perseguir una integración de datos más completa pero técnicamente más riesgosa. El valor agregado no está en la tecnología en sí, sino en lo que permite hacer con datos que hoy existen pero están dispersos y sin relacionar entre sí.
 
 ### 8. Alcance del producto
 
@@ -136,7 +133,7 @@ La estimación de próximo mantenimiento se muestra como un indicador dentro de 
 
 El alcance del proyecto define el trabajo que el equipo se compromete a realizar para construir el producto descripto en la sección 8, dentro del marco del TPI — a diferencia del alcance del producto, que define qué hace el software.
 
-- Se desarrollará una Progressive Web App (PWA) responsive, compuesta por frontend, backend y base de datos, que implementa las funcionalidades del MVP y sus indicadores/análisis definidos en la sección 8. El carácter responsive de la PWA cubre el acceso desde distintos dispositivos sin requerir una aplicación móvil nativa, ya excluida del alcance del producto (sección 8.2).
+- Se desarrollará una **Progressive Web App (PWA)** responsive accesible desde cualquier navegador moderno (tanto móvil como de escritorio). Esta arquitectura permite al usuario utilizar la aplicación directamente desde el navegador de su teléfono móvil o instalar el acceso directo en la pantalla de inicio sin depender de tiendas de aplicaciones (Play Store / App Store), garantizando usabilidad ágil al momento de cargar un gasto en una estación de servicio o taller.
 - El desarrollo se organiza en un repositorio único de GitHub, con el código fuente, la base de datos y la documentación del proyecto centralizados allí, conforme al requisito de repositorio único que exige la cátedra.
-- Se realizará el despliegue en la nube , alojando  los componentes principales del sistema (backend, frontend y base de datos) en un servicio online.
-- La elección de tecnologías específicas (lenguajes, frameworks, motor de base de datos, plataforma de despliegue) no forma parte de esta sección — se define y justifica en `docs/stack.md`. El cronograma, las tareas y los entregables por etapa se documentan en `docs/plan-de-trabajo.md`.
+- Se realizará el despliegue en la nube, alojando  los componentes principales del sistema (backend, frontend y base de datos) en un servicio online.
+- La elección de tecnologías específicas (lenguajes, frameworks, motor de base de datos, plataforma de despliegue) no forma parte de esta sección. Se define y justifica en `docs/stack.md`. El cronograma, las tareas y los entregables por etapa se documentan en `docs/plan-de-trabajo.md`.

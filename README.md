@@ -50,5 +50,5 @@ La documentación más completa del proyecto se encuentra en la carpeta [docs](d
 - psycopg2 2.x — Driver
 
 ### Infraestructura
-- A definir entre Render y Railway.
-- GitHub Actions — CI/CD.
+- **Plataforma:** Render.
+- **CI/CD:** GitHub Actions.
