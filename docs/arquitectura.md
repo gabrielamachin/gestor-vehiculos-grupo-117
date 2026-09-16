@@ -69,6 +69,37 @@ Esta sección define el esquema de base de datos relacional del proyecto.
 
 <!-- To do: adjuntar -->
 
+```mermaid
+erDiagram
+    USUARIOS ||--o{ VEHICULOS : posee
+    VEHICULOS ||--o{ GASTOS : registra
+
+    USUARIOS {
+        uuid id PK
+        varchar nombre
+        varchar email UK
+        varchar password_hash
+    }
+
+    VEHICULOS {
+        uuid id PK
+        uuid usuario_id FK
+        varchar alias
+        numeric kilometraje_inicial
+        numeric kilometraje_actual
+        numeric intervalo_mantenimiento_km "nullable"
+    }
+
+    GASTOS {
+        uuid id PK
+        uuid vehiculo_id FK
+        enum categoria
+        numeric monto
+        date fecha
+        text descripcion "nullable"
+    }
+```
+
 ---
 
 ## 2. Diccionario de datos
