@@ -111,7 +111,7 @@ Las funcionalidades de esta sección responden directamente a las necesidades id
 - Visualización del gasto acumulado por categoría.
 - Comparación del gasto de combustible con el promedio histórico propio.
 - Estimación del próximo mantenimiento según kilometraje, a partir de un intervalo (ej. "cada 10.000 km") y el kilometraje actual, ambos cargados por el usuario. No se contemplan reglas específicas por marca o modelo.
-- Heurística de orientación "reparar o reemplazar": herramienta de apoyo a la decisión a partir de los datos cargados por el usuario, no una recomendación financiera ni una tasación objetiva del vehículo.
+- Orientación sobre "reparar o reemplazar": herramienta de apoyo a la decisión a partir de los datos cargados por el usuario, no una recomendación financiera ni una tasación objetiva del vehículo.
 
 #### 8.2 Explícitamente fuera de alcance
 - Integración automática con el vehículo u OBD.
@@ -123,7 +123,7 @@ Las funcionalidades de esta sección responden directamente a las necesidades id
 - Aplicación móvil nativa.
 - Gestión multiusuario o vehículos compartidos entre distintos usuarios.
 
-**Relación necesidad → funcionalidad → alcance:** el registro de combustible, mantenimiento, reparaciones y otros gastos, junto con la gestión de uno o varios vehículos, resuelve la necesidad de centralizar la información y gestionar cada vehículo de forma independiente. El costo real por kilómetro y el gasto acumulado por categoría resuelven la necesidad de conocer el costo real del vehículo. La comparación con el promedio histórico propio resuelve la necesidad de detectar aumentos. La estimación de próximo mantenimiento resuelve la necesidad de recordar y anticipar mantenimientos. La heurística de reparar o reemplazar resuelve la necesidad de contar con información para esa decisión (todas, necesidades de la sección 3). Lo que queda fuera de esta versión (8.2) son las funcionalidades que no son imprescindibles para resolver esas necesidades: requieren una fuente de datos externa (integración con el vehículo, bancos, talleres o aseguradoras), un análisis que excede un cálculo directo (tasación de mercado, modelos predictivos) o una ampliación de alcance no comprometida en esta etapa (aplicación móvil nativa, gestión multiusuario).
+**Relación necesidad → funcionalidad → alcance:** el registro de combustible, mantenimiento, reparaciones y otros gastos, junto con la gestión de uno o varios vehículos, resuelve la necesidad de centralizar la información y gestionar cada vehículo de forma independiente. El costo real por kilómetro y el gasto acumulado por categoría resuelven la necesidad de conocer el costo real del vehículo. La comparación con el promedio histórico propio resuelve la necesidad de detectar aumentos. La estimación de próximo mantenimiento resuelve la necesidad de recordar y anticipar mantenimientos. La orientación sobre reparar o reemplazar resuelve la necesidad de contar con información para esa decisión (todas, necesidades de la sección 3). Lo que queda fuera de esta versión (8.2) son las funcionalidades que no son imprescindibles para resolver esas necesidades: requieren una fuente de datos externa (integración con el vehículo, bancos, talleres o aseguradoras), un análisis que excede un cálculo directo (tasación de mercado, modelos predictivos) o una ampliación de alcance no comprometida en esta etapa (aplicación móvil nativa, gestión multiusuario).
 
 #### 8.3 Decisión de diseño: indicador en la aplicación, no notificación push
 

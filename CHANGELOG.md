@@ -6,7 +6,12 @@
 
 ## [Unreleased]
 
-*(Aún no hay cambios pendientes para la próxima versión)*
+### Added
+- Incorporada la arquitectura de la aplicación en `docs/arquitectura.md`: modelo cliente-servidor en 3 capas, justificación del stack, comunicación entre capas y correspondencia con los servicios de Render (Static Site, Web Service, Postgres).
+- Documentada la relación entre las capas de la arquitectura y los módulos definidos en `docs/modulos.md`.
+
+### Changed
+- Reformulada la descripción del Módulo Analítico y de Alertas en `docs/modulos.md` para alinearla con la terminología unificada.
 
 ---
 
