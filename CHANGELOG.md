@@ -7,11 +7,19 @@
 ## [Unreleased]
 
 ### Added
-- Incorporada la arquitectura de la aplicación en `docs/arquitectura.md`: modelo cliente-servidor en 3 capas, justificación del stack, comunicación entre capas y correspondencia con los servicios de Render (Static Site, Web Service, Postgres).
+- Incorporada la arquitectura de la aplicación en `docs/arquitectura.md`: modelo cliente-servidor en 3 capas, justificación del stack, justificación de PWA vs. app móvil nativa y comunicación entre capas.
 - Documentada la relación entre las capas de la arquitectura y los módulos definidos en `docs/modulos.md`.
+- Incorporado `docs/esquema-db.md` con el modelo relacional del proyecto: diagrama entidad-relación, diccionario de datos, relaciones, decisiones de diseño y validación de cobertura contra el MVP.
+- Incorporado `database/schema.sql` con la definición del esquema relacional (usuarios, vehículos y gastos) y sus índices para consultas agregadas.
+- Incorporadas restricciones `CHECK` en `database/schema.sql` para reforzar las reglas de integridad del modelo (monto de gasto positivo, coherencia de kilometrajes, formato de email y strings no vacíos).
+- Documentada la estrategia de validación en tres capas (UI, backend y base de datos) en `docs/esquema-db.md`.
 
 ### Changed
+- Reorganizada la documentación de arquitectura y datos: `docs/arquitectura.md` cubre la arquitectura de la aplicación y `docs/esquema-db.md` el esquema de base de datos, para que cada documento tenga una única responsabilidad.
 - Reformulada la descripción del Módulo Analítico y de Alertas en `docs/modulos.md` para alinearla con la terminología unificada.
+
+### Removed
+- Removida la sección de arquitectura de datos (Parte 2) de `docs/arquitectura.md`; su contenido se trasladó a `docs/esquema-db.md`.
 
 ---
 
