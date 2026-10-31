@@ -6,6 +6,15 @@
 
 ## [Unreleased]
 
+### Added (correcciones de la 2.ª entrega)
+- Documentada la estructura interna de la API en `docs/arquitectura.md` (sección 1.4): organización por módulo y, dentro de cada módulo, por responsabilidad (router, schemas, service, repository, models), con reglas de dependencia y estructura del frontend.
+- Incorporada la nomenclatura de los módulos en `docs/modulos.md`: un único nombre por concepto, compartido entre documentación, API, base de datos y carpetas.
+- Incorporados en `docs/modulos.md` el diagrama de relaciones entre módulos, la tabla de casos de uso por módulo y el diagrama de secuencia del flujo crítico "consultar el costo real por km".
+- Modelo de datos ampliado de 3 a 6 tablas: `categorias_gasto`, `lecturas_kilometraje` y `planes_mantenimiento`.
+- Incorporada en `docs/esquema-db.md` la justificación de la separación de tablas y la sección sobre dónde se concentra la complejidad de la aplicación.
+- Incorporada en `docs/esquema-db.md` (sección 6) la matriz de validación por capa, aclarando que la base de datos es la última línea de defensa y no la única.
+- Incorporada en `docs/esquema-db.md` (sección 7) la justificación de cada índice y de los índices descartados.
+
 ### Added
 - Incorporada la arquitectura de la aplicación en `docs/arquitectura.md`: modelo cliente-servidor en 3 capas, justificación del stack, justificación de PWA vs. app móvil nativa y comunicación entre capas.
 - Documentada la relación entre las capas de la arquitectura y los módulos definidos en `docs/modulos.md`.
@@ -13,6 +22,16 @@
 - Incorporado `database/schema.sql` con la definición del esquema relacional (usuarios, vehículos y gastos) y sus índices para consultas agregadas.
 - Incorporadas restricciones `CHECK` en `database/schema.sql` para reforzar las reglas de integridad del modelo (monto de gasto positivo, coherencia de kilometrajes, formato de email y strings no vacíos).
 - Documentada la estrategia de validación en tres capas (UI, backend y base de datos) en `docs/esquema-db.md`.
+
+### Changed (correcciones de la 2.ª entrega)
+- Los módulos de `docs/modulos.md` pasan de dividirse por capa a definirse como componentes del dominio: Usuarios, Vehículos, Categorías, Gastos, Kilometraje, Mantenimiento e Indicadores. "Seguridad/Autenticación" se unifica en Usuarios, "Transacciones" en Gastos, y "Analítico y de Alertas" y "Reportes" en Indicadores.
+- El contrato de la API pasa a un prefijo por módulo (`/usuarios`, `/vehiculos`, `/categorias`, `/gastos`, `/kilometraje`, `/mantenimiento`, `/indicadores`).
+- La categoría de gasto pasa de `enum` a tabla propia: agregar una categoría es un `INSERT`, sin migración.
+- `vehiculos.kilometraje_actual` se reemplaza por el historial `lecturas_kilometraje` (el kilometraje actual es la última lectura).
+- `vehiculos.intervalo_mantenimiento_km` se reemplaza por `planes_mantenimiento` (varios planes por vehículo); `gastos` incorpora `plan_mantenimiento_id` y `kilometraje` opcionales.
+- Agregada la restricción `UNIQUE (usuario_id, alias)` en `vehiculos`.
+- Índices de `gastos` rediseñados: se eliminan `idx_gastos_vehiculo_id`, `idx_gastos_fecha` e `idx_gastos_categoria` (redundantes o de baja selectividad) y se incorporan `idx_gastos_vehiculo_fecha` e `idx_gastos_plan_km`.
+- Actualizada en `docs/viabilidad.md` la mitigación de latencia de consultas para reflejar los nuevos índices.
 
 ### Changed
 - Reorganizada la documentación de arquitectura y datos: `docs/arquitectura.md` cubre la arquitectura de la aplicación y `docs/esquema-db.md` el esquema de base de datos, para que cada documento tenga una única responsabilidad.
