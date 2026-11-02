@@ -18,9 +18,11 @@ class Settings(BaseSettings):
     @field_validator("database_url")
     @classmethod
     def _normalizar_database_url(cls, valor: str) -> str:
-        # Render entrega "postgres://...", pero SQLAlchemy 2 solo reconoce "postgresql://".
-        if valor.startswith("postgres://"):
-            return "postgresql://" + valor[len("postgres://"):]
+        # Render entrega "postgres://..." y SQLAlchemy 2 solo reconoce "postgresql://".
+        # Además se fija el driver (psycopg2): SQLAlchemy 2.1+ usa psycopg v3 por defecto.
+        for prefijo in ("postgres://", "postgresql://"):
+            if valor.startswith(prefijo):
+                return "postgresql+psycopg2://" + valor[len(prefijo):]
         return valor
 
     @property
