@@ -72,4 +72,4 @@ La complejidad general del proyecto se evalúa como **Baja-Media**. Las operacio
 |---|---|---|---|
 | **Free tier sleeping (Render)** | Alta | Medio | Documentar el "cold start" en el README; implementar endpoint `/health` para mantener activo en demostraciones. |
 | **CORS en producción** | Media | Alto | Configurar `CORS_ORIGINS` con la URL estática del frontend en Render desde el inicio del desarrollo. |
-| **Latencia en consultas analíticas y agregaciones** | Baja | Medio | Crear índices en PostgreSQL (`vehicle_id`, `fecha`, `categoria`) para optimizar agregaciones. |
+| **Latencia en consultas analíticas y agregaciones** | Baja | Medio | Crear índices compuestos en PostgreSQL sobre `gastos` (`vehiculo_id, fecha` y `vehiculo_id, categoria_id, fecha`) para optimizar agregaciones; justificación en [esquema-db.md](esquema-db.md), sección 7. |
