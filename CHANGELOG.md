@@ -14,6 +14,10 @@
 - Incorporada en `docs/esquema-db.md` la justificación de la separación de tablas y la sección sobre dónde se concentra la complejidad de la aplicación.
 - Incorporada en `docs/esquema-db.md` (sección 6) la matriz de validación por capa, aclarando que la base de datos es la última línea de defensa y no la única.
 - Incorporada en `docs/esquema-db.md` (sección 7) la justificación de cada índice y de los índices descartados.
+- Módulo Vehículos (`backend/app/vehiculos/`): alta, listado, consulta, edición de alias y baja de vehículos (prefijo `/vehiculos`). Expone `obtener_de_usuario`, que los demás módulos usan para verificar la pertenencia antes de operar sobre un vehículo.
+- Módulo Kilometraje (`backend/app/kilometraje/`): registro, listado, edición y baja de lecturas del odómetro, y consulta de la última lectura, que es el kilometraje actual del vehículo (prefijo `/kilometraje`). Valida que el odómetro no retroceda respecto del kilometraje inicial ni de las demás lecturas, y admite una sola lectura por vehículo y día.
+- `core/tipos.py`: tipos compartidos `Kilometros` (validado como `Decimal` y entregado como número JSON) y `FechaNoFutura`.
+- Pruebas de servicio, de API y de integración para Vehículos y Kilometraje, incluido el aislamiento entre usuarios. Las de integración corren contra PostgreSQL real y se activan con la variable `TEST_DATABASE_URL`; comparten el helper `tests/utils_integracion.py`.
 
 ### Added
 - Incorporada la arquitectura de la aplicación en `docs/arquitectura.md`: modelo cliente-servidor en 3 capas, justificación del stack, justificación de PWA vs. app móvil nativa y comunicación entre capas.

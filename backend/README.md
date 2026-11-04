@@ -30,6 +30,13 @@ Para probar endpoints protegidos en Swagger: hacer `POST /usuarios/login`, copia
 pytest
 ```
 
+Las pruebas de integración usan una base de datos PostgreSQL de prueba y se saltean si no está definida `TEST_DATABASE_URL`. Usar una base exclusiva (por ejemplo `gestor_vehiculos_test`): cada corrida ejecuta `schema.sql`, que **borra y recrea las tablas**.
+
+```powershell
+$env:TEST_DATABASE_URL="postgresql://postgres:TU_CLAVE@localhost:5432/gestor_vehiculos_test"
+pytest
+```
+
 ## Convenciones al agregar un módulo
 
 1. Crear `app/<modulo>/` con `router.py`, `schemas.py`, `service.py`, `repository.py` y `models.py` (tomar `usuarios/` como molde).
