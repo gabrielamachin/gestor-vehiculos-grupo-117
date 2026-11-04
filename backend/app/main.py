@@ -5,6 +5,7 @@ from app.core import health
 from app.core.config import get_settings
 from app.core.errors import registrar_manejadores
 from app.usuarios.router import router as usuarios_router
+from app.vehiculos.router import router as vehiculos_router 
 
 
 def crear_app() -> FastAPI:
@@ -25,6 +26,7 @@ def crear_app() -> FastAPI:
 
     app.include_router(health.router)
     app.include_router(usuarios_router)
+    app.include_router(vehiculos_router)
     return app
 
 
