@@ -18,6 +18,9 @@
 - Módulo Kilometraje (`backend/app/kilometraje/`): registro, listado, edición y baja de lecturas del odómetro, y consulta de la última lectura, que es el kilometraje actual del vehículo (prefijo `/kilometraje`). Valida que el odómetro no retroceda respecto del kilometraje inicial ni de las demás lecturas, y admite una sola lectura por vehículo y día.
 - `core/tipos.py`: tipos compartidos `Kilometros` (validado como `Decimal` y entregado como número JSON) y `FechaNoFutura`.
 - Pruebas de servicio, de API y de integración para Vehículos y Kilometraje, incluido el aislamiento entre usuarios. Las de integración corren contra PostgreSQL real y se activan con la variable `TEST_DATABASE_URL`; comparten el helper `tests/utils_integracion.py`.
+- Módulo Categorías (`backend/app/categorias/`): consulta del catálogo de categorías de gasto (prefijo `/categorias`). Expone `obtener_activa` y `obtener_por_codigo` para Gastos e Indicadores.
+- Módulo Mantenimiento (`backend/app/mantenimiento/`): alta, listado, consulta, edición y baja de planes de mantenimiento por vehículo (prefijo `/mantenimiento`). Expone `obtener_plan_del_vehiculo` y `listar_planes_de_vehiculo` para Gastos e Indicadores.
+- Pruebas de servicio, de API y de integración para Categorías y Mantenimiento.
 
 ### Added
 - Incorporada la arquitectura de la aplicación en `docs/arquitectura.md`: modelo cliente-servidor en 3 capas, justificación del stack, justificación de PWA vs. app móvil nativa y comunicación entre capas.
