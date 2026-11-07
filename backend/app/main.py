@@ -9,6 +9,8 @@ from app.vehiculos.router import router as vehiculos_router
 from app.kilometraje.router import router as kilometraje_router
 from app.categorias.router import router as categorias_router
 from app.mantenimiento.router import router as mantenimiento_router
+from app.gastos.router import router as gastos_router
+from app.indicadores.router import router as indicadores_router
 
 
 def crear_app() -> FastAPI:
@@ -33,6 +35,8 @@ def crear_app() -> FastAPI:
     app.include_router(kilometraje_router)
     app.include_router(categorias_router)
     app.include_router(mantenimiento_router)
+    app.include_router(gastos_router)
+    app.include_router(indicadores_router)
     return app
 
 

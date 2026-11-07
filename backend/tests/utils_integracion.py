@@ -9,6 +9,7 @@ database/schema.sql, que BORRA y recrea las tablas. Usar una base exclusiva para
 """
 import os
 import uuid
+from contextlib import contextmanager
 from pathlib import Path
 
 import pytest
@@ -79,3 +80,14 @@ def nuevo_vehiculo(client, headers, alias="Auto", km_inicial=1000) -> str:
     r = client.post("/vehiculos", json={"alias": alias, "kilometraje_inicial": km_inicial}, headers=headers)
     assert r.status_code == 201
     return r.json()["id"]
+
+
+@contextmanager
+def sesion_de_prueba(client):
+    """Sesión sobre la base de pruebas, para ejercitar servicios o scripts directamente (sin pasar por HTTP)."""
+    gen = client.app.dependency_overrides[get_db]()
+    db = next(gen)
+    try:
+        yield db
+    finally:
+        gen.close()
