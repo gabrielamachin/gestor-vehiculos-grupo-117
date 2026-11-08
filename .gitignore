@@ -5,15 +5,27 @@ build/
 .next/
 out/
 .env
-.env.local
-.env.*.local
+.env.*
+!.env.example
+.vite/
+coverage/
 
 # Python / backend
 __pycache__/
 *.py[cod]
 venv/
 .venv/
+*.sqlite
 *.sqlite3
+*.db
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.tox/
+.coverage
+.coverage.*
+htmlcov/
+*.egg-info/
 
 # OS/editor
 .DS_Store

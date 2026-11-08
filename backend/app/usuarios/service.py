@@ -31,8 +31,11 @@ def registrar(db: Session, datos: UsuarioRegistro) -> Usuario:
     return usuario
 
 
-def login(db: Session, datos: UsuarioLogin) -> str:
-    """Devuelve un token JWT. El mismo mensaje para email inexistente y contraseña incorrecta."""
+def iniciar_sesion(db: Session, datos: UsuarioLogin) -> tuple[Usuario, str]:
+    """Verifica las credenciales y devuelve el usuario y un token JWT.
+
+    El mismo mensaje para email inexistente y contraseña incorrecta.
+    """
     usuario = repository.obtener_por_email(db, datos.email)
     if usuario is None:
         # Se verifica igual contra un hash de relleno para que el tiempo de respuesta no delate si el email existe.
@@ -40,7 +43,12 @@ def login(db: Session, datos: UsuarioLogin) -> str:
         raise NoAutenticado("Credenciales inválidas")
     if not verificar_password(datos.password, usuario.password_hash):
         raise NoAutenticado("Credenciales inválidas")
-    return crear_token(usuario.id)
+    return usuario, crear_token(usuario.id)
+
+
+def login(db: Session, datos: UsuarioLogin) -> str:
+    """Solo el token JWT (para clientes que no son el navegador: Swagger, scripts, tests)."""
+    return iniciar_sesion(db, datos)[1]
 
 
 def obtener_perfil(db: Session, usuario_id: uuid.UUID) -> Usuario:

@@ -14,6 +14,7 @@ class Settings(BaseSettings):
     jwt_expire_minutes: int = 60
     # Lista separada por comas; se expone como lista en `cors_origins_lista`.
     cors_origins: str = "http://localhost:5173"
+    cookie_secure: bool = False
 
     @field_validator("database_url")
     @classmethod
