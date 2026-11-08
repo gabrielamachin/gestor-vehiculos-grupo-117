@@ -213,8 +213,11 @@ def test_peso_justo_en_el_umbral_cuenta():
 
 
 def test_aumento_justo_en_el_factor_cuenta():
-    assert "reparaciones_en_aumento" in _cumplidas(_evaluar(0, 1, 15000, 10000, None))
-    assert "reparaciones_en_aumento" not in _cumplidas(_evaluar(0, 1, 14999, 10000, None))
+    resultado = _evaluar(0, 1, 16000, 10000, None)
+    assert "reparaciones_en_aumento" in _cumplidas(resultado)
+    descripcion = next(s.descripcion for s in resultado.senales if s.codigo == "reparaciones_en_aumento")
+    assert "1,6 veces" in descripcion
+    assert "reparaciones_en_aumento" not in _cumplidas(_evaluar(0, 1, 15999, 10000, None))
 
 
 def test_aumento_no_se_evalua_si_antes_no_habia_reparaciones():
@@ -224,3 +227,10 @@ def test_aumento_no_se_evalua_si_antes_no_habia_reparaciones():
 
 def test_kilometraje_desconocido_no_cumple_la_senal():
     assert "kilometraje_elevado" not in _cumplidas(_evaluar(0, 1, 0, 0, None))
+
+
+def test_kilometraje_elevado_usa_separador_de_miles_local():
+    resultado = _evaluar(0, 1, 0, 0, 150000)
+    senal = next(s for s in resultado.senales if s.codigo == "kilometraje_elevado")
+    assert senal.descripcion == "El vehículo supera los 150.000 km."
+    assert senal.cumplida
