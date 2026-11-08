@@ -21,7 +21,7 @@ UMBRAL_COMBUSTIBLE = Decimal("0.20")        # el mes evaluado supera al promedio
 MIN_MESES_HISTORIAL = 3                     # meses previos con gasto necesarios para comparar
 UMBRAL_PROXIMO = Decimal("0.10")            # a menos del 10% del intervalo del vencimiento -> "próximo"
 UMBRAL_PESO_REPARACIONES = Decimal("0.35")  # reparaciones >= 35% del gasto de los últimos 12 meses
-FACTOR_AUMENTO_REPARACIONES = Decimal("1.5")  # últimos 6 meses >= 1,5 veces los 6 meses previos
+FACTOR_AUMENTO_REPARACIONES = Decimal("1.6")  # últimos 6 meses >= 1,6 veces los 6 meses previos
 KM_ELEVADO = Decimal("150000")
 
 AVISO_ORIENTACION = (
@@ -133,7 +133,7 @@ def evaluar_reparar_o_reemplazar(
     """Orientación (no tasación) a partir de tres señales sobre los gastos propios.
 
     1. Peso de las reparaciones: >= 35% del gasto total de los últimos 12 meses.
-    2. Reparaciones en aumento: los últimos 6 meses gastan >= 1,5 veces los 6 meses previos.
+    2. Reparaciones en aumento: los últimos 6 meses gastan >= 1,6 veces los 6 meses previos.
     3. Kilometraje elevado: >= 150.000 km.
     Ninguna señal -> reparar; una -> evaluar; dos o más -> considerar reemplazo.
     """
@@ -151,13 +151,13 @@ def evaluar_reparar_o_reemplazar(
         Senal(
             "reparaciones_en_aumento",
             "El gasto en reparaciones de los últimos 6 meses es al menos "
-            f"{FACTOR_AUMENTO_REPARACIONES} veces el de los 6 meses anteriores.",
+            f"{str(FACTOR_AUMENTO_REPARACIONES).replace('.', ',')} veces el de los 6 meses anteriores.",
             reparaciones_6m_previos > 0
             and reparaciones_6m_recientes >= reparaciones_6m_previos * FACTOR_AUMENTO_REPARACIONES,
         ),
         Senal(
             "kilometraje_elevado",
-            f"El vehículo supera los {KM_ELEVADO:,.0f} km.",
+            f"El vehículo supera los {format(KM_ELEVADO, ',.0f').replace(',', '.')} km.",
             km_actual is not None and km_actual >= KM_ELEVADO,
         ),
     )
