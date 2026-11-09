@@ -8,3 +8,7 @@ export function listarVehiculos(): Promise<Vehiculo[]> {
 export function obtenerVehiculo(id: string): Promise<Vehiculo> {
   return solicitar<Vehiculo>(`/vehiculos/${id}`)
 }
+
+export function crearVehiculo(datos: { alias: string; kilometraje_inicial: number }): Promise<Vehiculo> {
+  return solicitar<Vehiculo>('/vehiculos', { metodo: 'POST', cuerpo: datos })
+}

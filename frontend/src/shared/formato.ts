@@ -30,3 +30,19 @@ export function formatoMes(fechaIso: string): string {
   const [anio, mes] = fechaIso.split('-').map(Number)
   return new Date(anio, mes - 1, 1).toLocaleDateString('es-AR', { month: 'long', year: 'numeric' })
 }
+
+function dosDigitos(valor: number): string {
+  return String(valor).padStart(2, '0')
+}
+
+/** Fecha de hoy en la zona horaria del usuario, como "AAAA-MM-DD" (el formato de <input type="date"> y de la API). */
+export function fechaDeHoy(): string {
+  const hoy = new Date()
+  return `${hoy.getFullYear()}-${dosDigitos(hoy.getMonth() + 1)}-${dosDigitos(hoy.getDate())}`
+}
+
+/** "2024-03-15" -> "15/03/2024". */
+export function formatoFecha(fechaIso: string): string {
+  const [anio, mes, dia] = fechaIso.split('-')
+  return `${dia}/${mes}/${anio}`
+}
