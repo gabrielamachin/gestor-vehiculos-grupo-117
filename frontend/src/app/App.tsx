@@ -1,6 +1,10 @@
 import { Route, Routes } from 'react-router-dom'
 import { PaginaEditarGasto } from '../features/gastos/PaginaEditarGasto'
 import { PaginaNuevoGasto } from '../features/gastos/PaginaNuevoGasto'
+import { PaginaEditarLectura } from '../features/kilometraje/PaginaEditarLectura'
+import { PaginaNuevaLectura } from '../features/kilometraje/PaginaNuevaLectura'
+import { PaginaEditarPlan } from '../features/mantenimiento/PaginaEditarPlan'
+import { PaginaNuevoPlan } from '../features/mantenimiento/PaginaNuevoPlan'
 import { PaginaLogin } from '../features/usuarios/PaginaLogin'
 import { PaginaRegistro } from '../features/usuarios/PaginaRegistro'
 import { PaginaNuevoVehiculo } from '../features/vehiculos/PaginaNuevoVehiculo'
@@ -26,7 +30,10 @@ export default function App() {
           <Route path="vehiculos/:id" element={<PaginaVehiculo />} />
           <Route path="vehiculos/:id/gastos/nuevo" element={<PaginaNuevoGasto />} />
           <Route path="gastos/:gastoId/editar" element={<PaginaEditarGasto />} />
-          {/* Próximas pantallas: kilometraje y planes de mantenimiento */}
+          <Route path="vehiculos/:id/kilometraje/nuevo" element={<PaginaNuevaLectura />} />
+          <Route path="kilometraje/:lecturaId/editar" element={<PaginaEditarLectura />} />
+          <Route path="vehiculos/:id/planes/nuevo" element={<PaginaNuevoPlan />} />
+          <Route path="planes/:planId/editar" element={<PaginaEditarPlan />} />
         </Route>
       </Route>
 

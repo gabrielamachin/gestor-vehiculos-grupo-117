@@ -7,6 +7,8 @@ import { BotonEnlace } from '../../shared/componentes/BotonEnlace'
 import { formatoKm } from '../../shared/formato'
 import { ListaGastos } from '../gastos/ListaGastos'
 import { Dashboard } from '../indicadores/Dashboard'
+import { ListaLecturas } from '../kilometraje/ListaLecturas'
+import { ListaPlanes } from '../mantenimiento/ListaPlanes'
 import { obtenerVehiculo } from './api'
 import type { Vehiculo } from './tipos'
 
@@ -14,8 +16,9 @@ type Estado = { tipo: 'cargando' } | { tipo: 'error'; mensaje: string } | { tipo
 
 function DetalleVehiculo({ id }: { id: string }) {
   const [estado, setEstado] = useState<Estado>({ tipo: 'cargando' })
-  // Se incrementa al eliminar un gasto: cambia la key del dashboard y fuerza a recalcular los indicadores.
+  // Se incrementa al eliminar un gasto, una lectura o un plan: cambia la key del dashboard y fuerza a recalcular los indicadores.
   const [version, setVersion] = useState(0)
+  const alCambiar = () => setVersion((v) => v + 1)
 
   useEffect(() => {
     let cancelado = false
@@ -47,14 +50,28 @@ function DetalleVehiculo({ id }: { id: string }) {
         <>
           <h1 className="mt-3 text-xl font-semibold">{estado.vehiculo.alias}</h1>
           <p className="text-sm text-slate-500">Kilometraje inicial: {formatoKm(estado.vehiculo.kilometraje_inicial)}</p>
-          <div className="mb-5 mt-4">
+          <div className="mb-5 mt-4 flex flex-wrap gap-3">
             <BotonEnlace to={`/vehiculos/${id}/gastos/nuevo`}>+ Cargar gasto</BotonEnlace>
+            <BotonEnlace to={`/vehiculos/${id}/kilometraje/nuevo`} variante="secundario">
+              + Cargar kilometraje
+            </BotonEnlace>
           </div>
           {/* key: al cambiar de vehículo, o de versión, se reinicia la carga de indicadores */}
           <Dashboard key={`${id}-${version}`} vehiculoId={id} />
 
           <h2 className="mb-3 mt-8 text-lg font-semibold">Gastos</h2>
-          <ListaGastos vehiculoId={id} alCambiar={() => setVersion((v) => v + 1)} />
+          <ListaGastos vehiculoId={id} alCambiar={alCambiar} />
+
+          <h2 className="mb-3 mt-8 text-lg font-semibold">Kilometraje</h2>
+          <ListaLecturas vehiculoId={id} alCambiar={alCambiar} />
+
+          <div className="mb-3 mt-8 flex items-center justify-between gap-3">
+            <h2 className="text-lg font-semibold">Planes de mantenimiento</h2>
+            <Link to={`/vehiculos/${id}/planes/nuevo`} className="text-sm font-medium text-brand hover:underline">
+              + Agregar plan
+            </Link>
+          </div>
+          <ListaPlanes vehiculoId={id} alCambiar={alCambiar} />
         </>
       )}
     </section>
