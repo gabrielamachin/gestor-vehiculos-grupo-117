@@ -5,6 +5,7 @@ import { Alerta } from '../../shared/componentes/Alerta'
 import { Boton } from '../../shared/componentes/Boton'
 import { BotonEnlace } from '../../shared/componentes/BotonEnlace'
 import { Campo } from '../../shared/componentes/Campo'
+import { useAvisos } from '../../shared/mensajes/useAvisos'
 import type { Vehiculo } from '../vehiculos/tipos'
 import { actualizarPlan, crearPlan } from './api'
 import type { PlanMantenimiento } from './tipos'
@@ -20,6 +21,7 @@ interface Props {
 }
 
 export function FormularioPlan({ vehiculo, plan, alGuardar }: Props) {
+  const avisos = useAvisos()
   const [nombre, setNombre] = useState(plan?.nombre ?? '')
   const [intervalo, setIntervalo] = useState(plan === undefined ? '' : String(plan.intervalo_km))
   const [error, setError] = useState<string | null>(null)
@@ -48,6 +50,7 @@ export function FormularioPlan({ vehiculo, plan, alGuardar }: Props) {
     try {
       if (plan) await actualizarPlan(plan.id, cambios)
       else await crearPlan({ vehiculo_id: vehiculo.id, ...cambios })
+      avisos.exito(plan ? 'Plan actualizado' : 'Plan guardado')
       alGuardar()
     } catch (e) {
       setError(mensajeDeError(e))

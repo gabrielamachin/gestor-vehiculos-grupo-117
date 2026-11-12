@@ -5,6 +5,7 @@ import { Alerta } from '../../shared/componentes/Alerta'
 import { Boton } from '../../shared/componentes/Boton'
 import { BotonEnlace } from '../../shared/componentes/BotonEnlace'
 import { Campo } from '../../shared/componentes/Campo'
+import { useAvisos } from '../../shared/mensajes/useAvisos'
 import { crearVehiculo } from './api'
 import type { Vehiculo } from './tipos'
 
@@ -12,6 +13,7 @@ import type { Vehiculo } from './tipos'
 const FORMATO_KM = /^(\d{1,8}(\.\d{1,2})?|\.\d{1,2})$/
 
 export function FormularioVehiculo({ alCrear }: { alCrear: (vehiculo: Vehiculo) => void }) {
+  const avisos = useAvisos()
   const [alias, setAlias] = useState('')
   const [kilometraje, setKilometraje] = useState('')
   const [error, setError] = useState<string | null>(null)
@@ -34,7 +36,9 @@ export function FormularioVehiculo({ alCrear }: { alCrear: (vehiculo: Vehiculo) 
     setError(null)
     setEnviando(true)
     try {
-      alCrear(await crearVehiculo({ alias: alias.trim(), kilometraje_inicial: Number(kilometraje) }))
+      const vehiculo = await crearVehiculo({ alias: alias.trim(), kilometraje_inicial: Number(kilometraje) })
+      avisos.exito('Vehículo agregado')
+      alCrear(vehiculo)
     } catch (e) {
       setError(mensajeDeError(e))
       setEnviando(false)

@@ -5,6 +5,7 @@ import { Alerta } from '../../shared/componentes/Alerta'
 import { Boton } from '../../shared/componentes/Boton'
 import { BotonEnlace } from '../../shared/componentes/BotonEnlace'
 import { Campo } from '../../shared/componentes/Campo'
+import { useAvisos } from '../../shared/mensajes/useAvisos'
 import { fechaDeHoy, formatoFecha, formatoKm } from '../../shared/formato'
 import type { Vehiculo } from '../vehiculos/tipos'
 import { actualizarLectura, crearLectura, listarLecturas } from './api'
@@ -21,6 +22,7 @@ interface Props {
 }
 
 export function FormularioLectura({ vehiculo, lectura, alGuardar }: Props) {
+  const avisos = useAvisos()
   const editando = lectura !== undefined
   const [kilometraje, setKilometraje] = useState(lectura === undefined ? '' : String(lectura.kilometraje))
   const [fecha, setFecha] = useState(lectura?.fecha ?? fechaDeHoy())
@@ -78,6 +80,7 @@ export function FormularioLectura({ vehiculo, lectura, alGuardar }: Props) {
     try {
       if (lectura) await actualizarLectura(lectura.id, cambios)
       else await crearLectura({ vehiculo_id: vehiculo.id, ...cambios })
+      avisos.exito(lectura ? 'Lectura actualizada' : 'Lectura guardada')
       alGuardar()
     } catch (e) {
       setError(mensajeDeError(e))

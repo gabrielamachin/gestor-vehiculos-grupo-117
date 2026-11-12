@@ -6,6 +6,7 @@ import { Boton } from '../../shared/componentes/Boton'
 import { BotonEnlace } from '../../shared/componentes/BotonEnlace'
 import { Campo } from '../../shared/componentes/Campo'
 import { Selector } from '../../shared/componentes/Selector'
+import { useAvisos } from '../../shared/mensajes/useAvisos'
 import { fechaDeHoy, formatoKm } from '../../shared/formato'
 import { listarCategorias } from '../categorias/api'
 import type { Categoria } from '../categorias/tipos'
@@ -78,6 +79,7 @@ function texto(valor: number | null | undefined): string {
 }
 
 function CamposGasto({ vehiculo, gasto, categorias, planes, alGuardar }: PropsCampos) {
+  const avisos = useAvisos()
   const [categoriaId, setCategoriaId] = useState(texto(gasto?.categoria_id))
   const [planId, setPlanId] = useState(gasto?.plan_mantenimiento_id ?? '')
   const [monto, setMonto] = useState(texto(gasto?.monto))
@@ -136,6 +138,7 @@ function CamposGasto({ vehiculo, gasto, categorias, planes, alGuardar }: PropsCa
     try {
       if (gasto) await actualizarGasto(gasto.id, cambios)
       else await crearGasto({ vehiculo_id: vehiculo.id, ...cambios })
+      avisos.exito(gasto ? 'Gasto actualizado' : 'Gasto guardado')
       alGuardar()
     } catch (e) {
       setError(mensajeDeError(e))
