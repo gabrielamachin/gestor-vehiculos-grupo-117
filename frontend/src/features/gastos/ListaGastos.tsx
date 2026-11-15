@@ -2,6 +2,8 @@ import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { mensajeDeError } from '../../shared/api/errores'
 import { Alerta } from '../../shared/componentes/Alerta'
+import { useAvisos } from '../../shared/mensajes/useAvisos'
+import { useConfirmar } from '../../shared/mensajes/useConfirmar'
 import { formatoFecha, formatoMoneda } from '../../shared/formato'
 import { listarCategorias } from '../categorias/api'
 import type { Categoria } from '../categorias/tipos'
@@ -25,7 +27,8 @@ export function ListaGastos({ vehiculoId, alCambiar }: Props) {
   const [estado, setEstado] = useState<Estado>({ tipo: 'cargando' })
   const [mostrarTodos, setMostrarTodos] = useState(false)
   const [eliminando, setEliminando] = useState<string | null>(null)
-  const [errorAccion, setErrorAccion] = useState<string | null>(null)
+  const avisos = useAvisos()
+  const confirmar = useConfirmar()
 
   useEffect(() => {
     let cancelado = false
@@ -42,8 +45,14 @@ export function ListaGastos({ vehiculoId, alCambiar }: Props) {
   }, [vehiculoId])
 
   async function eliminar(gasto: Gasto) {
-    if (!window.confirm('¿Eliminar este gasto? Esta acción no se puede deshacer.')) return
-    setErrorAccion(null)
+    const confirmado = await confirmar({
+      titulo: '¿Eliminar este gasto?',
+      mensaje: `Gasto del ${formatoFecha(gasto.fecha)} por ${formatoMoneda(gasto.monto, 2)}. Esta acción no se puede deshacer.`,
+      textoConfirmar: 'Eliminar',
+      peligro: true,
+    })
+    if (!confirmado) return
+
     setEliminando(gasto.id)
     try {
       await eliminarGasto(gasto.id)
@@ -51,8 +60,9 @@ export function ListaGastos({ vehiculoId, alCambiar }: Props) {
         anterior.tipo === 'ok' ? { ...anterior, gastos: anterior.gastos.filter((g) => g.id !== gasto.id) } : anterior,
       )
       alCambiar()
+      avisos.exito('Gasto eliminado')
     } catch (e) {
-      setErrorAccion(mensajeDeError(e))
+      avisos.error(mensajeDeError(e))
     } finally {
       setEliminando(null)
     }
@@ -74,8 +84,6 @@ export function ListaGastos({ vehiculoId, alCambiar }: Props) {
 
   return (
     <div className="space-y-3">
-      {errorAccion && <Alerta>{errorAccion}</Alerta>}
-
       <ul className="divide-y divide-slate-100 rounded-xl border border-slate-200 bg-white shadow-sm">
         {visibles.map((gasto) => (
           <li key={gasto.id} className="p-4">

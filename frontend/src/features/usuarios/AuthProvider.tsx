@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useMemo, useState } from 'react'
 import type { ReactNode } from 'react'
 import { registrarManejadorSesionVencida } from '../../shared/api/cliente'
+import { useAvisos } from '../../shared/mensajes/useAvisos'
 import {
   cerrarSesion as cerrarSesionEnApi,
   consultarSesion,
@@ -12,18 +13,22 @@ import type { AuthContextValor } from './auth-context'
 import type { Usuario } from './tipos'
 
 export function AuthProvider({ children }: { children: ReactNode }) {
+  const avisos = useAvisos()
   const [usuario, setUsuario] = useState<Usuario | null>(null)
   // El token vive en una cookie HttpOnly que el JavaScript no puede leer: la única forma de saber si
   // hay sesión es preguntarle a la API, así que al abrir la app siempre hay una verificación inicial.
   const [cargando, setCargando] = useState(true)
 
-  // Una sesión vencida (401 en un endpoint protegido) solo limpia el estado local: la cookie ya no sirve.
-  const limpiarSesion = useCallback(() => setUsuario(null), [])
+  // Una sesión vencida (401 en un endpoint protegido) limpia el estado local (la cookie ya no sirve) y avisa.
+  const alSesionVencida = useCallback(() => {
+    setUsuario(null)
+    avisos.error('Tu sesión venció. Ingresá de nuevo.')
+  }, [avisos])
 
   useEffect(() => {
-    registrarManejadorSesionVencida(limpiarSesion)
+    registrarManejadorSesionVencida(alSesionVencida)
     return () => registrarManejadorSesionVencida(null)
-  }, [limpiarSesion])
+  }, [alSesionVencida])
 
   useEffect(() => {
     let cancelado = false

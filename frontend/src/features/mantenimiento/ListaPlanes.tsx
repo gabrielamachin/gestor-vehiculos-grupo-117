@@ -2,6 +2,8 @@ import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { mensajeDeError } from '../../shared/api/errores'
 import { Alerta } from '../../shared/componentes/Alerta'
+import { useAvisos } from '../../shared/mensajes/useAvisos'
+import { useConfirmar } from '../../shared/mensajes/useConfirmar'
 import { formatoKm } from '../../shared/formato'
 import { eliminarPlan, listarPlanes } from './api'
 import type { PlanMantenimiento } from './tipos'
@@ -17,7 +19,8 @@ interface Props {
 export function ListaPlanes({ vehiculoId, alCambiar }: Props) {
   const [estado, setEstado] = useState<Estado>({ tipo: 'cargando' })
   const [eliminando, setEliminando] = useState<string | null>(null)
-  const [errorAccion, setErrorAccion] = useState<string | null>(null)
+  const avisos = useAvisos()
+  const confirmar = useConfirmar()
 
   useEffect(() => {
     let cancelado = false
@@ -34,8 +37,14 @@ export function ListaPlanes({ vehiculoId, alCambiar }: Props) {
   }, [vehiculoId])
 
   async function eliminar(plan: PlanMantenimiento) {
-    if (!window.confirm(`¿Eliminar el plan "${plan.nombre}"? Los gastos asociados se conservan.`)) return
-    setErrorAccion(null)
+    const confirmado = await confirmar({
+      titulo: `¿Eliminar el plan "${plan.nombre}"?`,
+      mensaje: 'Los gastos asociados se conservan, pero dejan de estar vinculados a este plan.',
+      textoConfirmar: 'Eliminar',
+      peligro: true,
+    })
+    if (!confirmado) return
+
     setEliminando(plan.id)
     try {
       await eliminarPlan(plan.id)
@@ -43,8 +52,9 @@ export function ListaPlanes({ vehiculoId, alCambiar }: Props) {
         anterior.tipo === 'ok' ? { ...anterior, planes: anterior.planes.filter((p) => p.id !== plan.id) } : anterior,
       )
       alCambiar()
+      avisos.exito('Plan eliminado')
     } catch (e) {
-      setErrorAccion(mensajeDeError(e))
+      avisos.error(mensajeDeError(e))
     } finally {
       setEliminando(null)
     }
@@ -64,8 +74,6 @@ export function ListaPlanes({ vehiculoId, alCambiar }: Props) {
 
   return (
     <div className="space-y-3">
-      {errorAccion && <Alerta>{errorAccion}</Alerta>}
-
       <ul className="divide-y divide-slate-100 rounded-xl border border-slate-200 bg-white shadow-sm">
         {estado.planes.map((plan) => (
           <li key={plan.id} className="p-4">
