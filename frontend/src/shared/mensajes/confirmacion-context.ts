@@ -7,6 +7,11 @@ export interface OpcionesConfirmacion {
   textoConfirmar?: string
   /** true para acciones destructivas: el botón de confirmación se muestra en rojo. */
   peligro?: boolean
+  /**
+   * Si se informa, el botón de confirmación solo se habilita cuando el usuario escribe este texto (sin distinguir
+   * mayúsculas). Para acciones irreversibles, como borrar un vehículo con todos sus datos.
+   */
+  escribir?: string
 }
 
 /** Muestra el diálogo y devuelve true si el usuario confirma, false si cancela, cierra o presiona Esc. */

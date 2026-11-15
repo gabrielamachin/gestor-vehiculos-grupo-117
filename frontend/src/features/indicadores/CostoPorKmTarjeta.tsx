@@ -13,9 +13,16 @@ export function CostoPorKmTarjeta({ datos }: { datos: CostoPorKm }) {
           {formatoMoneda(datos.costo_por_km, 2)}
           <span className="text-base font-normal text-slate-500"> por km</span>
         </p>
-        <p className="mt-1 text-sm text-slate-600">
-          Gastaste {formatoMoneda(datos.total_gastado)} en {formatoKm(datos.km_recorridos)} recorridos.
-        </p>
+        <dl className="mt-4 grid grid-cols-2 gap-3 border-t border-slate-200 pt-3 text-sm">
+          <div>
+            <dt className="text-xs text-slate-500">Gasto acumulado</dt>
+            <dd className="mt-1 font-medium text-slate-700">{formatoMoneda(datos.total_gastado)}</dd>
+          </div>
+          <div>
+            <dt className="text-xs text-slate-500">Distancia recorrida</dt>
+            <dd className="mt-1 font-medium text-slate-700">{formatoKm(datos.km_recorridos)}</dd>
+          </div>
+        </dl>
       </>
     )
   } else if (datos.estado === 'sin_lecturas') {
