@@ -7,6 +7,7 @@ import { PaginaEditarPlan } from '../features/mantenimiento/PaginaEditarPlan'
 import { PaginaNuevoPlan } from '../features/mantenimiento/PaginaNuevoPlan'
 import { PaginaLogin } from '../features/usuarios/PaginaLogin'
 import { PaginaRegistro } from '../features/usuarios/PaginaRegistro'
+import { PaginaEditarVehiculo } from '../features/vehiculos/PaginaEditarVehiculo'
 import { PaginaNuevoVehiculo } from '../features/vehiculos/PaginaNuevoVehiculo'
 import { PaginaVehiculo } from '../features/vehiculos/PaginaVehiculo'
 import { Layout } from './Layout'
@@ -28,6 +29,7 @@ export default function App() {
           <Route index element={<PaginaInicio />} />
           <Route path="vehiculos/nuevo" element={<PaginaNuevoVehiculo />} />
           <Route path="vehiculos/:id" element={<PaginaVehiculo />} />
+          <Route path="vehiculos/:id/editar" element={<PaginaEditarVehiculo />} />
           <Route path="vehiculos/:id/gastos/nuevo" element={<PaginaNuevoGasto />} />
           <Route path="gastos/:gastoId/editar" element={<PaginaEditarGasto />} />
           <Route path="vehiculos/:id/kilometraje/nuevo" element={<PaginaNuevaLectura />} />

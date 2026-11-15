@@ -8,7 +8,7 @@ export function Layout() {
   return (
     <div className="min-h-screen bg-slate-50 text-slate-900">
       <header className="border-b border-slate-200 bg-white">
-        <div className="mx-auto flex max-w-3xl items-center justify-between gap-3 px-4 py-3">
+        <div className="mx-auto flex max-w-3xl items-center justify-between gap-3 px-4 py-3 lg:max-w-5xl">
           <Link to="/" className="font-semibold text-brand">
             Gestor de Vehículos
           </Link>
@@ -20,7 +20,7 @@ export function Layout() {
           </div>
         </div>
       </header>
-      <main className="mx-auto max-w-3xl px-4 py-6">
+      <main className="mx-auto max-w-3xl px-4 py-6 lg:max-w-5xl">
         <Outlet />
       </main>
     </div>

@@ -4,6 +4,8 @@ import { TarjetaIndicador } from '../../shared/componentes/TarjetaIndicador'
 import type { Tono } from '../../shared/componentes/TarjetaIndicador'
 import type { AlertaCombustible } from './tipos'
 
+const formateadorUmbral = new Intl.NumberFormat('es-AR', { maximumFractionDigits: 0 })
+
 export function AlertaCombustibleTarjeta({ datos }: { datos: AlertaCombustible }) {
   let tono: Tono = 'neutro'
   let contenido: ReactNode
@@ -35,8 +37,8 @@ export function AlertaCombustibleTarjeta({ datos }: { datos: AlertaCombustible }
           promedio de {formatoMoneda(datos.promedio_historico as number)}).
         </p>
         <p className="mt-2 text-xs text-slate-500">
-          Se avisa cuando supera al promedio en {formatoPorcentaje(datos.umbral_pct)} o más. Promedio de {datos.meses_en_historial} meses
-          anteriores con cargas.
+          Se avisa cuando supera al promedio en {formateadorUmbral.format(datos.umbral_pct)}% o más. Promedio de{' '}
+          {datos.meses_en_historial} meses anteriores con cargas.
         </p>
       </>
     )
