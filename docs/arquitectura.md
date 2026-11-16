@@ -140,3 +140,11 @@ Cada carpeta de `features/` contiene sus componentes, llamadas a la API y tipos 
 - Los **siete módulos** definidos en [modulos.md](modulos.md) existen en las dos primeras capas: cada uno tiene su carpeta en `frontend/` y su paquete en `backend/`, con el mismo nombre.
 - La capa de datos se apoya en el modelo de [esquema-db.md](esquema-db.md) y en el script [database/schema.sql](../database/schema.sql). Cada módulo es dueño de una tabla, salvo **Indicadores**, que no tiene tablas propias y calcula sobre los datos de los demás.
 - La **validación** se realiza en todas las capas (interfaz, esquemas, servicios y base de datos), no solo en la base. El detalle de qué regla se valida en qué capa está en [esquema-db.md](esquema-db.md), sección 6.
+
+### 1.6 Pruebas end-to-end
+
+La arquitectura se valida también de extremo a extremo con **Playwright**. Las pruebas automatizadas abren Chromium y ejercitan la aplicación completa: interfaz React, API FastAPI y PostgreSQL. Se pensaron como complemento a las pruebas unitarias, de API e integración del backend.
+
+Playwright inicia el backend y el frontend para cada ejecución. Antes de las pruebas, `global-setup` recrea el esquema y carga datos de demo en una base PostgreSQL exclusiva de E2E. La variable `E2E_DATABASE_URL` identifica esa base y los scripts de preparación comprueban que su nombre contenga `e2e` o `test`, ya que la ejecución elimina y recrea sus tablas. La configuración no reutiliza servidores en los puertos de desarrollo para evitar probar accidentalmente contra el entorno local habitual.
+
+La suite cubre autenticación, flujos de vehículos, kilometraje y gastos, aislamiento entre usuarios, indicadores con datos de demo y diseño responsive. La configuración conserva trazas y capturas ante fallos para facilitar su diagnóstico. Los casos y las instrucciones de ejecución se detallan en [frontend/e2e/README.md](../frontend/e2e/README.md).

@@ -6,6 +6,9 @@
 
 ## [Unreleased]
 
+### Added
+- Incorporada una suite de pruebas end-to-end con Playwright Test y Chromium para validar autenticación, flujos de vehículos/kilometraje/gastos, aislamiento entre usuarios, indicadores y diseño responsive. La configuración inicia frontend y backend, prepara una base PostgreSQL E2E y conserva informes, capturas y trazas; el detalle está en `frontend/e2e/README.md`.
+
 ### Added (correcciones de la 2.ª entrega)
 - Documentada la estructura interna de la API en `docs/arquitectura.md` (sección 1.4): organización por módulo y, dentro de cada módulo, por responsabilidad (router, schemas, service, repository, models), con reglas de dependencia y estructura del frontend.
 - Incorporada la nomenclatura de los módulos en `docs/modulos.md`: un único nombre por concepto, compartido entre documentación, API, base de datos y carpetas.

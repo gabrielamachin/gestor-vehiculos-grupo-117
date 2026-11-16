@@ -44,6 +44,17 @@
   - Amplio soporte ORM con SQLAlchemy
   - Escalable y confiable
 
+### Pruebas end-to-end
+
+**Playwright con TypeScript**
+- *Versión*: Playwright Test 1.65+
+- *Propósito*: Automatizar recorridos completos de usuario en un navegador real (Chromium)
+- *Justificación*:
+  - Verifica en conjunto la interfaz, la API y la persistencia, complementando las pruebas unitarias y de integración del backend.
+  - Permite comprobar flujos críticos, aislamiento entre usuarios y comportamiento responsive.
+  - Genera informes HTML, capturas y trazas para investigar fallos.
+  - La configuración inicia el frontend y el backend y utiliza una base PostgreSQL exclusiva para E2E, que se prepara con el esquema y datos de demo.
+
 ---
 
 ## Despliegue e infraestructura
