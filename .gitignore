@@ -9,6 +9,8 @@ out/
 !.env.example
 .vite/
 coverage/
+/frontend/playwright-report/
+/frontend/test-results/
 
 # Python / backend
 __pycache__/
