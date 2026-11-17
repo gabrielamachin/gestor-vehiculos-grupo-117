@@ -37,6 +37,8 @@ $env:TEST_DATABASE_URL="postgresql://postgres:TU_CLAVE@localhost:5432/gestor_veh
 pytest
 ```
 
+En GitHub Actions, el workflow `.github/workflows/ci.yml` inicia una instancia PostgreSQL desechable y ejecuta toda la suite, incluidas las pruebas de integración. Nunca se conecta a la base de desarrollo o producción.
+
 ## Convenciones al agregar un módulo
 
 1. Crear `app/<modulo>/` con `router.py`, `schemas.py`, `service.py`, `repository.py` y `models.py` (tomar `usuarios/` como molde).

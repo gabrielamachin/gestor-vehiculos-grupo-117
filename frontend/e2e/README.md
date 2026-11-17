@@ -52,6 +52,13 @@ Si una prueba falla, el informe incluye una captura y una traza (`trace`) con ca
 Los informes y resultados se generan en `frontend/playwright-report/` y `frontend/test-results/`. Son artefactos locales
 de cada ejecución y no hace falta versionarlos.
 
+## CI
+
+El workflow `.github/workflows/ci.yml` ejecuta estas pruebas en GitHub Actions junto con el lint y build del frontend
+y la suite del backend. Usa PostgreSQL desechable con una base cuyo nombre incluye `test`; no requiere secretos de
+repositorio ni accede a bases locales, de desarrollo o de producción. Si E2E falla, el informe de Playwright se
+publica como artefacto de la ejecución.
+
 ## Cómo funcionan
 
 - `playwright.config.ts` levanta la API (`uvicorn`, contra la base E2E) y el frontend (`npm run dev`).
