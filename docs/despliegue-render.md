@@ -32,7 +32,7 @@ El frontend usa `VITE_API_URL=/api`. Durante el build, Render reescribe `/api/*`
 
 ## Base de datos
 
-El despliegue ejecuta `python -m scripts.inicializar_bd` antes de iniciar el backend. Ese script crea el esquema solamente si todavía no existe la tabla `usuarios`; no elimina datos. Para preparar una base de pruebas, el script `reiniciar_bd` sigue limitado a bases cuyo nombre contenga `test` o `e2e`.
+Al iniciar el backend se ejecuta `python -m scripts.inicializar_bd`. Ese script crea el esquema solamente si todavía no existe la tabla `usuarios`; no elimina datos. Para preparar una base de pruebas, el script `reiniciar_bd` sigue limitado a bases cuyo nombre contenga `test` o `e2e`.
 
 ## PWA
 
