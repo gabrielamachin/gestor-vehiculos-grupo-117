@@ -52,3 +52,20 @@ La documentación más completa del proyecto se encuentra en la carpeta [docs](d
 ### Infraestructura
 - **Plataforma:** Render.
 - **CI/CD:** GitHub Actions.
+
+## Despliegue en Render
+
+El proyecto incluye un Blueprint en [render.yaml](render.yaml) para crear:
+
+- una base PostgreSQL administrada;
+- el servicio web del backend FastAPI;
+- el sitio estático PWA de React/Vite.
+
+1. Desde Render, seleccionar **New > Blueprint** y conectar este repositorio.
+2. Confirmar la creación de `gestor-vehiculos-db`, `gestor-vehiculos-api` y `gestor-vehiculos-web`.
+3. Si Render asigna URLs distintas a las previstas, actualizar `CORS_ORIGINS`, la reescritura `/api/*` de `render.yaml` y el origen del frontend.
+4. Comprobar el estado con `https://gestor-vehiculos-api.onrender.com/health/db`.
+
+La aplicación se instala como PWA desde navegadores compatibles mediante el botón **Instalar aplicación** del navegador. Los activos de la interfaz se almacenan en caché y las rutas internas usan `index.html` como fallback.
+
+Consulta la guía detallada de [despliegue en Render y configuración PWA](docs/despliegue-render.md).

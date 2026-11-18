@@ -7,6 +7,9 @@ import App from './app/App'
 import { AuthProvider } from './features/usuarios/AuthProvider'
 import { AvisosProvider } from './shared/mensajes/AvisosProvider'
 import { ConfirmacionProvider } from './shared/mensajes/ConfirmacionProvider'
+import { registerSW } from 'virtual:pwa-register'
+
+registerSW({ immediate: true })
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
