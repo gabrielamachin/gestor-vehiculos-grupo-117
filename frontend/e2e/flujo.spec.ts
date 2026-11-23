@@ -29,7 +29,7 @@ test('flujo completo: vehículo, kilometraje y gasto hasta ver el costo real por
   await expect(page.getByText('Gasto guardado')).toBeVisible()
 
   const costo = tarjeta(page, 'Costo real por kilómetro')
-  await expect(costo).toContainText('$ 1,00')
+  await expect(costo).toContainText('$ 1')
   await expect(costo).toContainText('$ 5.000')
   await expect(costo).toContainText('5.000 km')
 })

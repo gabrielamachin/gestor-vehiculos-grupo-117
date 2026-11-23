@@ -5,7 +5,7 @@ export function PaginaInicio() {
   return (
     <section>
       <div className="mb-4 flex items-center justify-between gap-3">
-        <h1 className="text-xl font-semibold">Mis vehículos</h1>
+        <h1 className="text-2xl font-semibold">Mis vehículos</h1>
         <BotonEnlace to="/vehiculos/nuevo">+ Agregar</BotonEnlace>
       </div>
       <ListaVehiculos />

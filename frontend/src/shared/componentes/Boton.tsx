@@ -15,7 +15,7 @@ export function Boton({ cargando = false, variante = 'primario', disabled, class
     <button
       {...resto}
       disabled={disabled || cargando}
-      className={`inline-flex min-h-11 items-center justify-center rounded-lg px-4 text-sm font-medium transition disabled:cursor-not-allowed disabled:opacity-60 ${estilos} ${className}`}
+      className={`inline-flex min-h-12 items-center justify-center rounded-lg px-5 text-base font-medium transition disabled:cursor-not-allowed disabled:opacity-60 ${estilos} ${className}`}
     >
       {cargando ? 'Un momento…' : children}
     </button>

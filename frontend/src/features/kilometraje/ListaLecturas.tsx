@@ -8,6 +8,7 @@ import { useConfirmar } from '../../shared/mensajes/useConfirmar'
 import { formatoFecha, formatoKm } from '../../shared/formato'
 import { eliminarLectura, listarLecturas } from './api'
 import type { Lectura } from './tipos'
+import { IconoEliminar, IconoLapiz } from '../../shared/componentes/Iconos'
 
 const CANTIDAD_INICIAL = 5
 
@@ -91,15 +92,17 @@ export function ListaLecturas({ vehiculoId, alCambiar }: Props) {
               {posicion === 0 && <Insignia tono="ok">Actual</Insignia>}
             </div>
             <div className="mt-2 flex gap-4 text-sm">
-              <Link to={`/kilometraje/${lectura.id}/editar`} className="font-medium text-brand hover:underline">
+              <Link to={`/kilometraje/${lectura.id}/editar`} className="inline-flex items-center gap-1.5 font-medium text-brand hover:underline">
+                <IconoLapiz />
                 Editar
               </Link>
               <button
                 type="button"
                 onClick={() => void eliminar(lectura)}
                 disabled={eliminando === lectura.id}
-                className="font-medium text-red-600 hover:underline disabled:opacity-50"
+                className="inline-flex items-center gap-1.5 font-medium text-red-600 hover:underline disabled:opacity-50"
               >
+                <IconoEliminar />
                 {eliminando === lectura.id ? 'Eliminando…' : 'Eliminar'}
               </button>
             </div>
