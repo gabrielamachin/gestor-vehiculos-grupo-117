@@ -16,6 +16,7 @@ import { listarPlanes } from '../mantenimiento/api'
 import { ListaPlanes } from '../mantenimiento/ListaPlanes'
 import { eliminarVehiculo as eliminarVehiculoEnApi, obtenerVehiculo } from './api'
 import type { Vehiculo } from './tipos'
+import { IconoEliminar, IconoLapiz } from '../../shared/componentes/Iconos'
 
 type Estado = { tipo: 'cargando' } | { tipo: 'error'; mensaje: string } | { tipo: 'ok'; vehiculo: Vehiculo }
 
@@ -97,10 +98,11 @@ function DetalleVehiculo({ id }: { id: string }) {
         <>
           <div className="mt-3 flex items-start justify-between gap-3">
             <div className="min-w-0">
-              <h1 className="break-words text-xl font-semibold">{estado.vehiculo.alias}</h1>
+              <h1 className="wrap-break-word text-2xl font-semibold">{estado.vehiculo.alias}</h1>
               <p className="text-sm text-slate-500">Kilometraje inicial: {formatoKm(estado.vehiculo.kilometraje_inicial)}</p>
             </div>
-            <Link to={`/vehiculos/${id}/editar`} className="shrink-0 text-sm font-medium text-brand hover:underline">
+            <Link to={`/vehiculos/${id}/editar`} className="inline-flex shrink-0 items-center gap-1.5 text-sm font-medium text-brand hover:underline">
+              <IconoLapiz />
               Editar
             </Link>
           </div>
@@ -113,14 +115,14 @@ function DetalleVehiculo({ id }: { id: string }) {
           {/* key: al cambiar de vehículo, o de versión, se reinicia la carga de indicadores */}
           <Dashboard key={`${id}-${version}`} vehiculoId={id} />
 
-          <h2 className="mb-3 mt-8 text-lg font-semibold">Gastos</h2>
+          <h2 className="mb-3 mt-8 text-xl font-semibold">Gastos</h2>
           <ListaGastos vehiculoId={id} alCambiar={alCambiar} />
 
-          <h2 className="mb-3 mt-8 text-lg font-semibold">Kilometraje</h2>
+          <h2 className="mb-3 mt-8 text-xl font-semibold">Kilometraje</h2>
           <ListaLecturas vehiculoId={id} alCambiar={alCambiar} />
 
           <div className="mb-3 mt-8 flex items-center justify-between gap-3">
-            <h2 className="text-lg font-semibold">Planes de mantenimiento</h2>
+            <h2 className="text-xl font-semibold">Planes de mantenimiento</h2>
             <Link to={`/vehiculos/${id}/planes/nuevo`} className="text-sm font-medium text-brand hover:underline">
               + Agregar plan
             </Link>
@@ -138,6 +140,7 @@ function DetalleVehiculo({ id }: { id: string }) {
               disabled={eliminando}
               className="mt-3 inline-flex min-h-11 items-center justify-center rounded-lg border border-red-300 bg-white px-4 text-sm font-medium text-red-700 transition hover:bg-red-100 disabled:cursor-not-allowed disabled:opacity-60"
             >
+              <IconoEliminar className="mr-2 h-4 w-4" />
               {eliminando ? 'Preparando…' : 'Eliminar vehículo'}
             </button>
           </section>

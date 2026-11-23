@@ -42,6 +42,14 @@ def porcentaje(parte: Decimal, total: Decimal) -> Decimal:
     return _dos_decimales(parte * 100 / total)
 
 
+def _formato_decimal_es(valor: Decimal) -> str:
+    """Presenta un decimal sin ceros finales y con coma decimal."""
+    texto = format(valor, "f")
+    if "." in texto:
+        texto = texto.rstrip("0").rstrip(".")
+    return texto.replace(".", ",")
+
+
 def costo_por_km(total_gastado: Decimal, km_inicial: Decimal, km_actual: Decimal | None) -> CostoPorKm:
     """Costo real por km = total gastado / km recorridos desde el kilometraje inicial."""
     if km_actual is None:
@@ -144,7 +152,7 @@ def evaluar_reparar_o_reemplazar(
     senales = (
         Senal(
             "peso_reparaciones",
-            f"Las reparaciones son el {peso}% de tus gastos de los últimos 12 meses "
+            f"Las reparaciones son el {_formato_decimal_es(peso)}% de tus gastos de los últimos 12 meses "
             f"(umbral: {UMBRAL_PESO_REPARACIONES * 100:.0f}%).",
             gasto_reparaciones_12m >= gasto_total_12m * UMBRAL_PESO_REPARACIONES,
         ),

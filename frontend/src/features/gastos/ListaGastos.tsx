@@ -9,6 +9,7 @@ import { listarCategorias } from '../categorias/api'
 import type { Categoria } from '../categorias/tipos'
 import { eliminarGasto, listarGastos } from './api'
 import type { Gasto } from './tipos'
+import { IconoEliminar, IconoLapiz } from '../../shared/componentes/Iconos'
 
 const CANTIDAD_INICIAL = 10
 
@@ -91,20 +92,22 @@ export function ListaGastos({ vehiculoId, alCambiar }: Props) {
               <div className="min-w-0">
                 <p className="font-medium text-slate-900">{nombres.get(gasto.categoria_id) ?? 'Sin categoría'}</p>
                 <p className="text-sm text-slate-500">{formatoFecha(gasto.fecha)}</p>
-                {gasto.descripcion && <p className="mt-1 break-words text-sm text-slate-600">{gasto.descripcion}</p>}
+                {gasto.descripcion && <p className="mt-1 wrap-break-word text-sm text-slate-600">{gasto.descripcion}</p>}
               </div>
               <p className="shrink-0 font-semibold text-slate-900">{formatoMoneda(gasto.monto, 2)}</p>
             </div>
             <div className="mt-2 flex gap-4 text-sm">
-              <Link to={`/gastos/${gasto.id}/editar`} className="font-medium text-brand hover:underline">
+              <Link to={`/gastos/${gasto.id}/editar`} className="inline-flex items-center gap-1.5 font-medium text-brand hover:underline">
+                <IconoLapiz />
                 Editar
               </Link>
               <button
                 type="button"
                 onClick={() => void eliminar(gasto)}
                 disabled={eliminando === gasto.id}
-                className="font-medium text-red-600 hover:underline disabled:opacity-50"
+                className="inline-flex items-center gap-1.5 font-medium text-red-600 hover:underline disabled:opacity-50"
               >
+                <IconoEliminar />
                 {eliminando === gasto.id ? 'Eliminando…' : 'Eliminar'}
               </button>
             </div>

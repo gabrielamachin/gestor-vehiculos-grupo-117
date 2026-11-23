@@ -7,6 +7,7 @@ import { useConfirmar } from '../../shared/mensajes/useConfirmar'
 import { formatoKm } from '../../shared/formato'
 import { eliminarPlan, listarPlanes } from './api'
 import type { PlanMantenimiento } from './tipos'
+import { IconoEliminar, IconoLapiz } from '../../shared/componentes/Iconos'
 
 type Estado = { tipo: 'cargando' } | { tipo: 'error'; mensaje: string } | { tipo: 'ok'; planes: PlanMantenimiento[] }
 
@@ -80,15 +81,17 @@ export function ListaPlanes({ vehiculoId, alCambiar }: Props) {
             <p className="font-medium text-slate-900">{plan.nombre}</p>
             <p className="text-sm text-slate-500">Se repite cada {formatoKm(plan.intervalo_km)}</p>
             <div className="mt-2 flex gap-4 text-sm">
-              <Link to={`/planes/${plan.id}/editar`} className="font-medium text-brand hover:underline">
+              <Link to={`/planes/${plan.id}/editar`} className="inline-flex items-center gap-1.5 font-medium text-brand hover:underline">
+                <IconoLapiz />
                 Editar
               </Link>
               <button
                 type="button"
                 onClick={() => void eliminar(plan)}
                 disabled={eliminando === plan.id}
-                className="font-medium text-red-600 hover:underline disabled:opacity-50"
+                className="inline-flex items-center gap-1.5 font-medium text-red-600 hover:underline disabled:opacity-50"
               >
+                <IconoEliminar />
                 {eliminando === plan.id ? 'Eliminando…' : 'Eliminar'}
               </button>
             </div>

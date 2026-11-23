@@ -9,6 +9,12 @@ import { AvisosProvider } from './shared/mensajes/AvisosProvider'
 import { ConfirmacionProvider } from './shared/mensajes/ConfirmacionProvider'
 import { registerSW } from 'virtual:pwa-register'
 
+const temaGuardado = localStorage.getItem('tema')
+const usarModoOscuro =
+  temaGuardado === 'oscuro' ||
+  (temaGuardado === null && window.matchMedia('(prefers-color-scheme: dark)').matches)
+document.documentElement.classList.toggle('dark', usarModoOscuro)
+
 registerSW({ immediate: true })
 
 createRoot(document.getElementById('root')!).render(

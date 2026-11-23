@@ -16,7 +16,7 @@ export function PaginaFormulario({ volverA, textoVolver, titulo, subtitulo, chil
       <Link to={volverA} className="text-sm font-medium text-brand hover:underline">
         ← {textoVolver}
       </Link>
-      <h1 className="mt-3 text-xl font-semibold">{titulo}</h1>
+      <h1 className="mt-3 text-2xl font-semibold">{titulo}</h1>
       {subtitulo && <p className="text-sm text-slate-500">{subtitulo}</p>}
       <div className="mt-5 rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">{children}</div>
     </section>

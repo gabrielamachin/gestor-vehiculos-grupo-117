@@ -12,7 +12,7 @@ const ESTILOS: Record<Tono, string> = {
 export function TarjetaIndicador({ titulo, tono = 'neutro', children }: { titulo: string; tono?: Tono; children: ReactNode }) {
   return (
     <section className={`rounded-2xl border p-4 shadow-sm ${ESTILOS[tono]}`}>
-      <h2 className="mb-2 text-sm font-medium text-slate-600">{titulo}</h2>
+      <h2 className="mb-3 text-base font-semibold text-slate-700">{titulo}</h2>
       {children}
     </section>
   )

@@ -212,6 +212,20 @@ def test_peso_justo_en_el_umbral_cuenta():
     assert "peso_reparaciones" not in _cumplidas(_evaluar(34999, 100000, 0, 0, None))
 
 
+def test_descripcion_peso_reparaciones_formato_es_ar():
+    sin_decimales = _evaluar(0, 100000, 0, 0, None)
+    descripcion = next(s.descripcion for s in sin_decimales.senales if s.codigo == "peso_reparaciones")
+    assert "Las reparaciones son el 0% de tus gastos" in descripcion
+
+    con_decimales = _evaluar(5000, 100000, 0, 0, None)
+    descripcion = next(s.descripcion for s in con_decimales.senales if s.codigo == "peso_reparaciones")
+    assert "Las reparaciones son el 5% de tus gastos" in descripcion
+
+    con_decimales = _evaluar(1, 3, 0, 0, None)
+    descripcion = next(s.descripcion for s in con_decimales.senales if s.codigo == "peso_reparaciones")
+    assert "Las reparaciones son el 33,33% de tus gastos" in descripcion
+
+
 def test_aumento_justo_en_el_factor_cuenta():
     resultado = _evaluar(0, 1, 16000, 10000, None)
     assert "reparaciones_en_aumento" in _cumplidas(resultado)
