@@ -20,7 +20,7 @@ export function Layout() {
     <div className="min-h-screen bg-slate-50 text-slate-900 dark:bg-slate-950 dark:text-slate-100">
       <header className="border-b border-slate-200 bg-white dark:border-slate-800 dark:bg-slate-900">
         <div className="mx-auto flex max-w-3xl items-center justify-between gap-3 px-4 py-3 lg:max-w-5xl">
-          <Link to="/" className="font-semibold text-brand">
+          <Link to="/" className="text-lg font-semibold text-brand dark:text-blue-300">
             Gestor de Vehículos
           </Link>
           <div className="flex items-center gap-3">

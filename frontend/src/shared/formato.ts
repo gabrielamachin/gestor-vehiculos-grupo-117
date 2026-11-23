@@ -13,7 +13,9 @@ function numero(valor: number, decimales: number): string {
 }
 
 export function formatoMoneda(valor: number, decimales = 0): string {
-  return `$ ${numero(valor, decimales)}`
+  const tieneDecimales = !Number.isInteger(valor)
+  const decimalesFinales = decimales === 0 ? (tieneDecimales ? 2 : 0) : tieneDecimales ? decimales : 0
+  return `$ ${numero(valor, decimalesFinales)}`
 }
 
 export function formatoKm(valor: number): string {

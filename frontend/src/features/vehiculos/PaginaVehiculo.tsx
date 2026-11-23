@@ -84,7 +84,7 @@ function DetalleVehiculo({ id }: { id: string }) {
 
   return (
     <section>
-      <Link to="/" className="text-sm font-medium text-brand hover:underline">
+      <Link to="/" className="inline-flex min-h-12 items-center rounded-lg px-3 text-base font-medium text-brand hover:underline dark:text-blue-300">
         ← Mis vehículos
       </Link>
 
@@ -98,12 +98,12 @@ function DetalleVehiculo({ id }: { id: string }) {
         <>
           <div className="mt-3 flex items-start justify-between gap-3">
             <div className="min-w-0">
-              <h1 className="wrap-break-word text-2xl font-semibold">{estado.vehiculo.alias}</h1>
-              <p className="text-sm text-slate-500">Kilometraje inicial: {formatoKm(estado.vehiculo.kilometraje_inicial)}</p>
+              <h1 className="wrap-break-word text-2xl font-semibold text-slate-900 dark:text-slate-50">{estado.vehiculo.alias}</h1>
+              <p className="mt-1 text-sm font-medium text-slate-600 dark:text-slate-200">Kilometraje inicial: {formatoKm(estado.vehiculo.kilometraje_inicial)}</p>
             </div>
-            <Link to={`/vehiculos/${id}/editar`} className="inline-flex shrink-0 items-center gap-1.5 text-sm font-medium text-brand hover:underline">
+            <Link to={`/vehiculos/${id}/editar`} className="inline-flex min-h-12 shrink-0 items-center justify-center gap-2 rounded-lg px-4 text-base font-medium text-brand hover:underline dark:text-blue-300">
               <IconoLapiz />
-              Editar
+              Editar vehículo
             </Link>
           </div>
           <div className="mb-5 mt-4 flex flex-wrap gap-3">
@@ -121,24 +121,27 @@ function DetalleVehiculo({ id }: { id: string }) {
           <h2 className="mb-3 mt-8 text-xl font-semibold">Kilometraje</h2>
           <ListaLecturas vehiculoId={id} alCambiar={alCambiar} />
 
-          <div className="mb-3 mt-8 flex items-center justify-between gap-3">
+          <div className="mb-3 mt-8 flex flex-col items-stretch gap-3 sm:flex-row sm:items-center sm:justify-between">
             <h2 className="text-xl font-semibold">Planes de mantenimiento</h2>
-            <Link to={`/vehiculos/${id}/planes/nuevo`} className="text-sm font-medium text-brand hover:underline">
+            <Link
+              to={`/vehiculos/${id}/planes/nuevo`}
+              className="inline-flex min-h-12 items-center justify-center rounded-lg px-5 text-base font-medium bg-brand text-white transition hover:bg-brand/90"
+            >
               + Agregar plan
             </Link>
           </div>
           <ListaPlanes vehiculoId={id} alCambiar={alCambiar} />
 
-          <section className="mt-10 rounded-2xl border border-red-200 bg-red-50 p-4">
-            <h2 className="text-sm font-semibold text-red-800">Zona de peligro</h2>
-            <p className="mt-1 text-sm text-red-700">
+          <section className="mt-10 rounded-2xl border border-red-200 bg-red-50 p-4 dark:border-red-400/70 dark:bg-slate-900">
+            <h2 className="text-sm font-semibold text-red-800 dark:text-red-300">Zona de peligro</h2>
+            <p className="mt-1 text-sm text-red-700 dark:text-red-200">
               Eliminar el vehículo borra también todos sus gastos, lecturas de kilometraje y planes de mantenimiento.
             </p>
             <button
               type="button"
               onClick={() => void eliminar(estado.vehiculo)}
               disabled={eliminando}
-              className="mt-3 inline-flex min-h-11 items-center justify-center rounded-lg border border-red-300 bg-white px-4 text-sm font-medium text-red-700 transition hover:bg-red-100 disabled:cursor-not-allowed disabled:opacity-60"
+              className="mt-3 inline-flex min-h-12 items-center justify-center rounded-lg border border-red-300 bg-white px-5 text-base font-medium text-red-700 transition hover:bg-red-100 disabled:cursor-not-allowed disabled:opacity-60 dark:border-red-400 dark:bg-slate-950 dark:text-red-200 dark:hover:bg-red-950"
             >
               <IconoEliminar className="mr-2 h-4 w-4" />
               {eliminando ? 'Preparando…' : 'Eliminar vehículo'}

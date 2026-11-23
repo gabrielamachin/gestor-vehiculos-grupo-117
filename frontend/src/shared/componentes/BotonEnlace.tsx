@@ -18,7 +18,7 @@ export function BotonEnlace({ to, variante = 'primario', className = '', childre
   return (
     <Link
       to={to}
-      className={`inline-flex min-h-11 items-center justify-center rounded-lg px-4 text-sm font-medium transition ${estilos} ${className}`}
+      className={`inline-flex min-h-12 items-center justify-center rounded-lg px-5 text-base font-medium transition ${estilos} ${className}`}
     >
       {children}
     </Link>

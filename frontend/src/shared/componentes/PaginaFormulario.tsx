@@ -13,7 +13,7 @@ interface Props {
 export function PaginaFormulario({ volverA, textoVolver, titulo, subtitulo, children }: Props) {
   return (
     <section className="mx-auto max-w-lg">
-      <Link to={volverA} className="text-sm font-medium text-brand hover:underline">
+      <Link to={volverA} className="inline-flex min-h-12 items-center rounded-lg px-3 text-base font-medium text-brand hover:underline dark:text-blue-300">
         ← {textoVolver}
       </Link>
       <h1 className="mt-3 text-2xl font-semibold">{titulo}</h1>
