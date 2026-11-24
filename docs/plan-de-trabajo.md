@@ -15,7 +15,7 @@ La planificación inicial se organizó en ocho semanas. La versión anterior del
 | 3-4 | CRUD de gastos por categoría y registro de kilometraje |
 | 4-5 | Costo real por km y gasto acumulado por categoría |
 | 5-6 | Alertas de combustible y estimación de próximos mantenimientos |
-| 6-7 | Heurística reparar/reemplazar y pulido de interfaz |
+| 6-7 | Orientación sobre "reparar o reemplazar" y pulido de interfaz |
 | 7 | Despliegue del frontend, backend y base de datos |
 | 8 | Datos de demostración, pruebas E2E y documentación final |
 
@@ -72,7 +72,7 @@ La misma evolución aparece reflejada en `CHANGELOG.md`, en las ramas fusionadas
 - [x] CRUD de lecturas de kilometraje.
 - [x] CRUD de planes de mantenimiento.
 - [x] Indicadores de costo por km, categorías, combustible y mantenimiento.
-- [x] Orientación heurística reparar/reemplazar.
+- [x] Orientación sobre "reparar o reemplazar".
 - [x] PWA responsive.
 - [x] Datos de demostración y scripts de inicialización.
 - [x] Pruebas unitarias, de servicio, API, integración y E2E.

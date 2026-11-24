@@ -12,7 +12,7 @@ La aplicación transforma los datos cargados manualmente por el usuario en infor
 - distribución de gastos por categoría;
 - comparación del gasto de combustible con el propio historial;
 - estimación de próximos mantenimientos;
-- orientación heurística sobre reparar o reemplazar.
+- Orientación sobre "reparar o reemplazar".
 
 El valor no depende de integraciones externas ni de fuentes de datos que excedan el alcance del MVP. El usuario ingresa sus registros una sola vez y obtiene indicadores que por sí solos pueden ayudar a presupuestar, detectar desvíos y tomar decisiones.
 

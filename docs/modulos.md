@@ -67,7 +67,7 @@ Endpoints disponibles:
 | `/indicadores/gasto-por-categoria` | Acumulado y distribución por categoría |
 | `/indicadores/alerta-combustible` | Comparación contra el promedio histórico propio |
 | `/indicadores/proximo-mantenimiento` | Próximo km estimado por plan |
-| `/indicadores/reparar-o-reemplazar` | Orientación heurística |
+| `/indicadores/reparar-o-reemplazar` | Orientación sobre "reparar o reemplazar" |
 
 Los indicadores son solo lectura y devuelven estados vacíos o insuficientes cuando no hay datos.
 
@@ -89,6 +89,13 @@ flowchart TD
 ```
 
 Un módulo usa el servicio de otro para datos compartidos. Los routers no llaman directamente a repositorios ajenos.
+
+## Permisos
+
+- Solo el registro y el inicio de sesión son públicos.
+- Los demás endpoints requieren un JWT válido enviado mediante cookie de sesión o encabezado `Authorization: Bearer`.
+- Cada usuario solo puede consultar y modificar sus propios vehículos y los gastos, lecturas y planes asociados.
+- Los servicios verifican la pertenencia antes de operar sobre un recurso. El aislamiento no depende únicamente de las claves foráneas.
 
 ## Estado de implementación
 
