@@ -114,7 +114,7 @@ Las funcionalidades de esta sección responden directamente a las necesidades id
 - Orientación sobre "reparar o reemplazar": herramienta de apoyo a la decisión a partir de los datos cargados por el usuario, no una recomendación financiera ni una tasación objetiva del vehículo.
 
 #### 8.2 Explícitamente fuera de alcance
-- Integración automática con el vehículo u OBD.
+- Integración automática con el vehículo u OBD (**On-Board Diagnostics**, sistema de diagnóstico integrado que permite leer datos y sensores del vehículo).
 - Integración con bancos, billeteras o estaciones de servicio.
 - Integración con talleres, aseguradoras u otros servicios externos.
 - Obtención automática del valor de mercado del vehículo.

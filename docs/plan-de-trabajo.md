@@ -1,76 +1,108 @@
-# Plan de trabajo — Gestor Inteligente de Vehículos
+# Plan de trabajo
 
-**Documento:** [plan-de-trabajo.md](plan-de-trabajo.md)
-**Responsable:** Integrante 3 — Gestión del Proyecto, Operatividad y Asistencia IA
+## Estado actual
 
-> Este documento define el cronograma, las tareas y los entregables del proyecto. El alcance del producto y del proyecto se definen en [alcance.md](alcance.md); el stack tecnológico y las decisiones de arquitectura se definen en [stack.md](stack.md) y [arquitectura.md](arquitectura.md); el modelo de datos del proyecto queda documentado en [esquema-db.md](esquema-db.md). Este plan no redefine esas decisiones, las toma como dato de entrada para organizar la ejecución.
+El MVP principal está implementado: autenticación, vehículos, categorías, gastos, lecturas, planes e indicadores cuentan con backend, frontend y pruebas.
 
----
+## Evidencia del cronograma original
 
-## 1. Objetivo general
+La planificación inicial se organizó en ocho semanas. La versión anterior del cronograma contemplaba las siguientes etapas:
 
-Desarrollar, dentro del plazo asignado por la cátedra para el TPI, una Progressive Web App que implemente las funcionalidades del MVP definidas en [alcance.md](alcance.md) (sección 8.1), con el stack tecnológico definido en [stack.md](stack.md), desplegada en un servicio en la nube.
-
-## 2. Objetivos específicos
-
-- Implementar el modelo de datos definido en [esquema-db.md](esquema-db.md) y el CRUD de vehículos y gastos por categoría.
-- Implementar el cálculo de costo real por kilómetro y el gasto acumulado por categoría.
-- Implementar la comparación de gasto de combustible contra el promedio histórico propio del usuario.
-- Implementar la estimación de próximo mantenimiento por kilometraje.
-- Implementar la heurística de orientación "reparar o reemplazar".
-- Desplegar la aplicación completa (frontend, backend y base de datos) en la infraestructura elegida.
-
-## 3. Alcance y no alcance
-
-Se remite íntegramente a [alcance.md](alcance.md) (secciones 8.1 y 8.2). Este plan de trabajo no agrega ni quita funcionalidades respecto de lo ya definido allí; cualquier tarea que implique una funcionalidad no listada en la sección 8.1 debe tratarse como fuera de alcance y no debe planificarse en este cronograma.
-
-## 4. Supuestos del cronograma
-
-- El equipo cuenta con 3 integrantes, cada uno a cargo de su perfil (Producto y Negocio, Arquitectura y Tecnología, Gestión y Operatividad), colaborando de forma transversal en el desarrollo.
-- El cronograma se organiza en **8 semanas**, ajustable según el plazo real de entrega definido por la cátedra.
-- La infraestructura de despliegue se define en [stack.md](stack.md) como Render; por lo tanto, el cronograma debe planificar el despliegue sobre esa plataforma desde la semana 6 en adelante, para no bloquear la etapa final.
-
-## 5. Cronograma por semana
-
-| Semana | Foco | Tareas principales |
-|---|---|---|
-| 1 | Setup del proyecto | Repositorio único en GitHub, estructura de carpetas (`backend/`, `frontend/`, `docs/`), configuración de entorno local, `.env.example`. Cierre del modelo de datos ([esquema-db.md](esquema-db.md)). |
-| 2 | Entidades base | CRUD de usuarios y vehículos (backend + frontend). Autenticación básica (JWT). |
-| 3-4 | Gestión de gastos | CRUD de gastos por categoría (combustible, mantenimiento, reparaciones, otros). Registro de kilometraje asociado. |
-| 4-5 | Indicadores centrales | Cálculo de costo real por km. Gasto acumulado por categoría con gráfico (Recharts/Chart.js). |
-| 5-6 | Motor de alertas y estimaciones | Comparación de gasto de combustible vs. promedio histórico propio. Estimación de próximo mantenimiento por kilometraje. |
-| 6-7 | Heurística de decisión y pulido | Heurística "reparar o reemplazar". Revisión de UI/UX, manejo de estados vacíos (usuario sin historial cargado). |
-| 7 | Despliegue | Configuración de variables de entorno, CORS, despliegue de backend, frontend y base de datos en la plataforma elegida. |
-| 8 | Cierre | Carga de datos de demostración, pruebas end-to-end, documentación final, preparación de la presentación. |
-
-## 6. Entregables por etapa
-
-| Etapa | Entregable |
+| Semana original | Planificación prevista |
 |---|---|
-| Semana 2 | Modelo de datos cerrado + CRUD de vehículos funcional |
-| Semana 4 | CRUD de gastos operativo |
-| Semana 5 | Costo por km y gasto anual por categoría visibles en el frontend |
-| Semana 6 | Alertas de combustible y estimación de mantenimiento funcionando |
-| Semana 7 | Heurística reparar/reemplazar + aplicación desplegada en un entorno accesible |
-| Semana 8 | Documentación completa (`docs/`), datos de demo cargados, proyecto listo para presentación |
+| 1 | Setup del repositorio, estructura del proyecto, entorno local y cierre del modelo inicial |
+| 2 | CRUD de usuarios y vehículos, con autenticación básica |
+| 3-4 | CRUD de gastos por categoría y registro de kilometraje |
+| 4-5 | Costo real por km y gasto acumulado por categoría |
+| 5-6 | Alertas de combustible y estimación de próximos mantenimientos |
+| 6-7 | Orientación sobre "reparar o reemplazar" y pulido de interfaz |
+| 7 | Despliegue del frontend, backend y base de datos |
+| 8 | Datos de demostración, pruebas E2E y documentación final |
 
-## 7. Riesgos operativos y de ejecución, y mitigaciones
+Este cronograma representaba una estimación académica inicial. El desarrollo real mostró que algunos conceptos necesitaban separarse en más entidades y que la integración, las pruebas y el despliegue requerían trabajo adicional.
 
-| Riesgo | Probabilidad | Impacto | Mitigación |
-|---|---|---|---|
-| Curva de aprendizaje del stack (FastAPI, TypeScript) consume más tiempo del previsto | Media | Medio | Priorizar un "hola mundo" end-to-end en la semana 1, antes de avanzar con features |
-| Falta de datos de prueba realistas dificulta demostrar las alertas y la heurística | Media | Alto | Precargar 2-3 vehículos con historial simulado desde la semana 2, en paralelo al desarrollo |
-| Descoordinación entre los tres perfiles (producto, arquitectura, gestión) genera trabajo duplicado o inconsistente | Baja | Medio | Repositorio único con documentación centralizada (`docs/`), seguimiento en Trello, comunicación diaria por WhatsApp (ya definido en [viabilidad.md](viabilidad.md)) |
-| Alcance que crece durante el desarrollo ("ya que estamos, agreguemos X") | Media | Alto | Revisar [alcance.md](alcance.md) (sección 8.2) en cada instancia de avance del equipo |
+## Ajustes realizados al cronograma
 
-## 8. Recursos humanos necesarios
+El cronograma se ajustó por resultados intermedios, correcciones de arquitectura y prioridades técnicas:
 
-- 3 integrantes, cada uno con dedicación parcial (proyecto académico), distribuidos según los perfiles ya definidos: Producto y Negocio, Arquitectura y Tecnología, Gestión y Operatividad.
-- No se contempla incorporar roles adicionales (por ejemplo, diseño UI dedicado o QA independiente); estas tareas se distribuyen entre los tres integrantes según la etapa del cronograma.
+1. **Revisión del modelo antes de completar los módulos:** el modelo inicial se amplió de tres tablas a seis. Se incorporaron `categorias_gasto`, `lecturas_kilometraje` y `planes_mantenimiento`, además de la asociación entre gastos y planes. Por esto, las entidades base quedaron documentadas antes de finalizar el backend.
+2. **Desarrollo vertical por módulo:** en vez de concentrar primero todos los CRUD, se completaron iteraciones consecutivas de vehículos y kilometraje, categorías y mantenimiento, y finalmente gastos e indicadores. Esta secuencia redujo dependencias pendientes entre módulos.
+3. **Autenticación integrada desde el inicio del backend:** el módulo Usuarios y la estructura base de la API quedaron disponibles antes de comenzar el CRUD completo del frontend.
+4. **Frontend construida después de estabilizar la API:** el dashboard, los formularios y las pantallas de edición se añadieron cuando ya existían los servicios principales del backend.
+5. **Pruebas incorporadas durante la implementación:** no se dejaron exclusivamente para la semana final. Se agregaron pruebas unitarias y de integración por módulo y, posteriormente, pruebas E2E con Playwright.
+6. **CI incorporado antes del cierre:** el workflow pasó a ejecutar análisis y compilación del frontend, pruebas del backend y pruebas E2E con PostgreSQL desechable.
+7. **Despliegue agregado como fase verificable:** Render y PWA no se trataron solo como una publicación final. Se configuraron, se corrigió el Blueprint y se agregó documentación de operación.
+8. **Pulido posterior al MVP funcional:** modo oscuro, mejoras responsive, formato de indicadores y ajustes de contraste se realizaron después de completar las funcionalidades principales.
 
-## 9. Criterios de éxito del MVP
+## Cronograma ajustado comparado con el original
 
-- El sistema calcula correctamente el costo por km a partir de datos cargados de prueba.
-- El sistema detecta al menos un caso de alerta de gasto de combustible fuera del promedio histórico del propio usuario.
-- La heurística "reparar o reemplazar" devuelve un resultado coherente con los datos cargados, presentado explícitamente como orientación y no como tasación.
-- La aplicación está desplegada y accesible públicamente para la presentación final.
+| Área | Plan original | Ajuste real |
+|---|---|---|
+| Entidades y relaciones | Se cerrarían en la semana 1 | Se revisaron durante septiembre y octubre; el modelo ampliado quedó registrado como corrección de arquitectura |
+| Usuarios y vehículos | Semana 2 | Se implementaron antes de completar los restantes módulos |
+| Kilometraje y mantenimiento | Implícitos dentro de gastos o la semana 3-5 | Se separaron como módulos propios con sus propias APIs y pruebas |
+| Gastos e indicadores | Semana 3-6 | Se completaron como una iteración backend/frontend posterior a las entidades base |
+| Dashboard | Previsto junto a indicadores | Se agregó una vez disponible el API de vehículo e indicadores |
+| Pruebas E2E | Semana 8 | Se desarrollaron y documentaron después del flujo funcional, y quedaron integradas en CI |
+| Despliegue en Render | Semana 7 | Se configuró a mitad de noviembre y se corrigió con ajustes posteriores del Blueprint |
+| Cierre visual y documentación | Semana 8 | Continuó hasta el pulido final de responsive, modo oscuro y documentos técnicos |
+
+## Evidencia histórica del ajuste
+
+Los registros del repositorio respaldan esta evolución:
+
+- Septiembre de 2026: documentación inicial, esquema de base de datos y arquitectura.
+- 1-3 de noviembre: estructura base del backend y módulo Usuarios.
+- 4-10 de noviembre: vehículos, kilometraje, categorías, mantenimiento y gastos.
+- 7-10 de noviembre: incorporación de indicadores y pantallas principales del frontend.
+- 12-15 de noviembre: kilometraje y planes en interfaz, mejoras de mensajes y edición/baja de vehículos.
+- 15-17 de noviembre: suite Playwright y ejecución automatizada en GitHub Actions.
+- 18 de noviembre: configuración de Render y PWA.
+- 23 de noviembre: pulido responsive y modo oscuro.
+
+La misma evolución aparece reflejada en `CHANGELOG.md`, en las ramas fusionadas y en el historial de Git. Estas referencias permiten distinguir la planificación inicial de las decisiones tomadas durante el desarrollo.
+
+## Objetivos cumplidos
+
+- [x] Repositorio único con backend, frontend, base de datos y documentación.
+- [x] Modelo PostgreSQL normalizado con restricciones e índices.
+- [x] Registro, login y sesión JWT por cookie.
+- [x] CRUD de vehículos con aislamiento por usuario.
+- [x] CRUD de gastos y asociación con planes.
+- [x] CRUD de lecturas de kilometraje.
+- [x] CRUD de planes de mantenimiento.
+- [x] Indicadores de costo por km, categorías, combustible y mantenimiento.
+- [x] Orientación sobre "reparar o reemplazar".
+- [x] PWA responsive.
+- [x] Datos de demostración y scripts de inicialización.
+- [x] Pruebas unitarias, de servicio, API, integración y E2E.
+- [x] CI en GitHub Actions.
+- [x] Blueprint de despliegue en Render.
+
+## Tareas siguientes sugeridas
+
+- Verificar y actualizar periódicamente el despliegue público.
+- Revisar seguridad de secretos y permisos de bases de datos.
+- Añadir pruebas para nuevos módulos antes de modificar su contrato.
+- Mantener documentación y esquema sincronizados con migraciones futuras.
+- Documentar el proceso de rollback y restauración de base.
+
+## Riesgos y mitigaciones
+
+| Riesgo | Mitigación aplicada |
+|---|---|
+| Datos incompletos | Los indicadores devuelven estados sin datos o insuficientes |
+| Acceso a datos ajenos | Los servicios verifican pertenencia con el usuario del JWT |
+| Reinicio accidental de producción | Los scripts destructivos rechazan bases que no contienen `test` o `e2e` |
+| Cambios incompatibles | CI ejecuta lint, build, backend y Playwright |
+| CORS incorrecto | `CORS_ORIGINS` admite una lista separada por comas |
+| Servicio suspendido por inactividad | `/health` permite comprobación liviana; `/health/db` verifica PostgreSQL |
+| Dependencias diferentes | El lockfile npm y los requirements fijan el entorno reproducible |
+
+## Criterios de cierre
+
+- Las pruebas y el build pasan en CI.
+- Cada recurso protegido valida el usuario autenticado.
+- El esquema puede inicializarse desde `database/schema.sql`.
+- Los datos de demo no se usan en pruebas contra una base de desarrollo.
+- El despliegue público responde a `/health/db`.

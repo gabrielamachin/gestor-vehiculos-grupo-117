@@ -1,75 +1,86 @@
-# Evaluación de viabilidad
+# Evaluación de Viabilidad
 
-> Este documento evalúa la viabilidad de negocio, técnica, operativa, temporal y el análisis de competencia del proyecto.
+## Viabilidad de negocio
 
----
+El producto está dirigido a usuarios particulares que poseen uno o varios vehículos y necesitan centralizar combustible, mantenimiento, reparaciones y otros gastos. El problema tiene sentido económico porque la dispersión de comprobantes y registros dificulta conocer el costo real de conservación y anticipar gastos.
 
-## 1. Viabilidad de negocio
+### Propuesta de valor
 
-*¿Tiene sentido llevar adelante este producto desde el punto de vista de negocio/producto?*
+La aplicación transforma los datos cargados manualmente por el usuario en información útil:
 
-### 1.1 Valor vs. esfuerzo
-El producto le pide al usuario que cargue manualmente sus datos de combustible, mantenimiento, reparaciones y otros gastos. Este esfuerzo no es nuevo porque el usuario ya dedica esfuerzo a gestionar esta información de forma dispersa. El producto concentra ese esfuerzo en un único lugar y lo transforma en información de valor: costo real por kilómetro, gasto acumulado por categoría, comparación con su propio histórico y orientación sobre mantenimiento o reemplazo. El esfuerzo de carga se justifica por el análisis obtenido a cambio.
+- costo acumulado y costo real por kilómetro;
+- distribución de gastos por categoría;
+- comparación del gasto de combustible con el propio historial;
+- estimación de próximos mantenimientos;
+- Orientación sobre "reparar o reemplazar".
 
-### 1.2 Enfoque sin integraciones
-El alcance excluye integraciones automáticas (bancos, talleres, OBD). El valor central de la propuesta está en relacionar y analizar los datos para generar indicadores, no en el mecanismo de carga. Este enfoque es estratégicamente defendible para sostener el valor central dentro del plazo del MVP.
+El valor no depende de integraciones externas ni de fuentes de datos que excedan el alcance del MVP. El usuario ingresa sus registros una sola vez y obtiene indicadores que por sí solos pueden ayudar a presupuestar, detectar desvíos y tomar decisiones.
 
----
+### Público objetivo
 
-## 2. Análisis de competencia y diferenciación
+El público inicial son propietarios particulares de vehículos que realizan seguimiento ocasional de gastos y mantienen comprobantes en medios físicos o aplicaciones distintas. Se prioriza la gestión individual y no se contempla la administración de flotas ni la participación de talleres o aseguradoras.
 
-*¿Qué existe hoy que resuelva parte de este problema, y en qué se diferencia esta propuesta?*
+### Esfuerzo y retorno
 
-### 2.1 Matriz competitiva
+El modelo requiere carga manual. La aplicación compensa ese esfuerzo al eliminar duplicación de registros, conservar el historial y automatizar cálculos que actualmente suelen hacerse por memoria o en planillas.
 
-| Alternativa | Tipo | Cobertura de gastos | Costo por km | Comparación histórica | Heurística decisión | Integraciones |
-|---|---|---|---|---|---|---|
-| **Apps de bitácora** (ej. Drivvo) | Competidor directo | Parcial (combustible) | Solo combustible | No | No | Baja |
-| **Apps oficiales de marca** | Competidor directo | Solo mantenimiento | No | No | No | Alta |
-| **Planillas de cálculo** | Competidor indirecto | Total (100% manual) | Manual | Manual | No | Ninguna |
-| **Apps bancarias** | Competidor indirecto | Parcial (general) | No | No | No | Alta |
+La viabilidad comercial debe validarse observando si los usuarios:
 
-### 2.2 Diferenciadores
-- **Cruce de categorías:** Ninguna alternativa directa releva simultáneamente todas las categorías para calcular un costo real por km integral.
-- **Comparación contra el propio histórico:** Detección automática de desvíos del patrón propio del usuario.
-- **Heurística de decisión:** Orientación sobre "reparar o reemplazar" a partir del historial, algo inexistente en los competidores relevados.
+- registran gastos de forma periódica;
+- consultan los indicadores;
+- encuentran útil la estimación de mantenimiento;
+- mantienen activos sus vehículos en la aplicación.
 
----
+El proyecto puede comenzar como una herramienta personal o académica sin costos de integración externa. Si evolucionara a un producto comercial, sería necesario validar su disposición a pagar y definir una propuesta de monetización sin afectar la utilidad básica.
 
-## 3. Viabilidad operativa, temporal y de dominio
+### Diferenciación
 
-*¿El equipo puede ejecutar este proyecto, con estos recursos, dentro de los plazos disponibles?*
+Frente a planillas y aplicaciones que registran un solo rubro, el proyecto combina gastos, kilometraje y mantenimientos en una misma visión. Su diferencia principal es relacionar estos datos para calcular indicadores por vehículo y compararlos con el historial propio del usuario.
 
-### 3.1 Viabilidad operativa
-El equipo cuenta con perfiles definidos: Producto y Estrategia, Arquitectura/Tecnología, y Gestión/Operatividad.
-- **Condiciones favorables:** No hay dependencias externas críticas (talleres, aseguradoras). Entorno de desarrollo local, gratuito y estandarizado (GitHub, Trello, WhatsApp).
-- **Riesgos operativos:** La coordinación de entregas cruzadas (ej. frontend esperando al backend) se mitiga con un cronograma semanal secuenciado que minimiza bloqueos.
+Las herramientas basadas en integraciones externas podrían ofrecer automatización, pero requieren infraestructura y fuentes de datos que están fuera del alcance de esta primera versión.
 
-### 3.2 Viabilidad temporal
-El cronograma de 8 semanas se ajusta al alcance acotado del MVP (cálculos y heurísticas simples sin integraciones externas).
-- **Punto de control:** Si en la semana 4 el CRUD de gastos no está operativo, el cronograma debe revisarse de inmediato, ya que todos los indicadores dependen de esta base.
+## Viabilidad funcional
 
-### 3.3 Viabilidad de dominio y conocimiento
-- **Comprensión del problema:** Las integrantes del equipo son usuarias de vehículos particulares en Argentina, lo que aporta una comprensión directa de las fricciones reales del mantenimiento cotidiano: la posible pérdida de los comprobantes de pago, la imprevisibilidad en el cálculo de los costos y la falta de seguimiento del costo por kilómetro.
-- **Validación del modelo matemático:** Las fórmulas requeridas (cálculo de costo por kilómetro, medias móviles de consumo y comparación de gastos acumulados) se basan en operaciones aritméticas y agregaciones estadísticas estándar, dominadas plenamente por el equipo.
-- **Reglas del dominio automotriz:** Se acotan deliberadamente los mantenimientos a intervalos universales estándar (ej. múltiplos de 10.000 km o 1 año) prescindiendo de especificaciones técnicas complejas por fabricante en esta versión, lo que garantiza que la lógica de negocio sea robusta y viable de implementar sin requerir un perito mecánico.
+El alcance puede resolverse con datos manuales y cálculos directos. Las operaciones principales son CRUD, agregaciones y reglas sobre fechas y kilómetros. No depende de integraciones externas ni modelos predictivos.
 
----
+El usuario recibe valor al centralizar gastos y ver métricas comparables. El valor depende de la calidad y cantidad de los datos cargados, por lo que la interfaz debe indicar explícitamente los casos insuficientes.
 
-## 4. Viabilidad técnica y escalabilidad
+## Viabilidad técnica
 
-### 4.1 Madurez del stack
-- **Frontend (React 18.x, TypeScript, Vite):** Ecosistema maduro, tipado estático y excelente rendimiento.
-- **Backend (Python 3.10+, FastAPI):** Framework consolidado, async nativo y validación robusta.
-- **Base de Datos (PostgreSQL 15+):** Ideal para modelo relacional (usuario → vehículos → gastos) y consultas agregadas.
-- **Infraestructura (Render):** Plataforma unificada y confiable para desplegar PWA, Web Service y Base de Datos de manera centralizada.
+La separación React/FastAPI/PostgreSQL coincide con las responsabilidades del proyecto:
 
-### 4.2 Complejidad de desarrollo
-La complejidad general del proyecto se evalúa como **Baja-Media**. Las operaciones son estándar (CRUD, Autenticación JWT) y la lógica matemática/estadística (costo por km, medias móviles) se apoya en cálculos directos asimilables en los tiempos propuestos.
+- React permite construir formularios y dashboard responsive.
+- FastAPI ofrece validación, routers y OpenAPI.
+- PostgreSQL garantiza integridad referencial y restricciones.
+- SQLAlchemy permite reemplazar consultas manuales por modelos y repositorios.
+- Playwright prueba la integración real navegador/API/base.
+- Render permite publicar los tres componentes desde un único Blueprint.
 
-### 4.3 Riesgos técnicos y mitigaciones
+El backend conserva una estructura por capas dentro de cada módulo. Las dependencias son acotadas y no existen ciclos entre los servicios.
+
+## Escalabilidad
+
+El modelo actual está orientado a un MVP académico o pequeño. Puede crecer mediante:
+
+- índices adicionales según consultas reales;
+- migraciones versionadas;
+- caché solo si la carga y latencia lo justifican;
+- particionamiento o exportaciones solo ante volúmenes mayores;
+- un servicio de analítica separado si aumenta mucho la carga.
+
+No conviene incorporar estas capacidades sin evidencia de necesidad.
+
+## Riesgos
+
 | Riesgo | Probabilidad | Impacto | Mitigación |
 |---|---|---|---|
-| **Free tier sleeping (Render)** | Alta | Medio | Documentar el "cold start" en el README; implementar endpoint `/health` para mantener activo en demostraciones. |
-| **CORS en producción** | Media | Alto | Configurar `CORS_ORIGINS` con la URL estática del frontend en Render desde el inicio del desarrollo. |
-| **Latencia en consultas analíticas y agregaciones** | Baja | Medio | Crear índices compuestos en PostgreSQL sobre `gastos` (`vehiculo_id, fecha` y `vehiculo_id, categoria_id, fecha`) para optimizar agregaciones; justificación en [esquema-db.md](esquema-db.md), sección 7. |
+| Render suspende instancias gratuitas | Media | Medio | Health checks y tolerancia a arranque en frío |
+| Datos insuficientes de un usuario | Alta | Medio | Estados explícitos sin datos |
+| CORS mal configurado | Media | Alto | Lista `CORS_ORIGINS` y pruebas de navegador |
+| Reinicio de una base equivocada | Baja | Alto | Guardas por nombre de base |
+| Secretos expuestos | Baja | Alto | Variables de entorno y generación de JWT en Render |
+| Credenciales débiles | Media | Alto | bcrypt y validación de inputs |
+
+## Operación y mantenimiento
+
+La aplicación dispone de health checks, scripts de inicialización, datos de demo, CI y documentación. Las pruebas actuales cubren rutas críticas, pero una nueva migración o cambio de contrato debe ejecutarse en una base separada antes de producción.

@@ -6,7 +6,7 @@
 
 ## 1. Tecnología
 
-La aplicación utiliza PostgreSQL 15+ como motor de base de datos relacional. El esquema completo (tablas, restricciones, índices y datos iniciales del catálogo de categorías) se encuentra en [database/schema.sql](../database/schema.sql).
+La aplicación utiliza PostgreSQL como motor de base de datos relacional. El CI usa PostgreSQL 16 y el despliegue usa una instancia administrada. El esquema completo (tablas, restricciones, índices y datos iniciales del catálogo de categorías) se encuentra en [database/schema.sql](../database/schema.sql). En desarrollo se puede usar PostgreSQL 15 o posterior.
 
 ## 2. Diagrama entidad-relación
 
@@ -173,14 +173,14 @@ El modelo es deliberadamente normalizado pero no extenso: la complejidad de la a
 - Costo real por km: `SUM(gastos.monto) / (última lectura − kilometraje_inicial)`, con manejo de casos sin datos suficientes.
 - Comparación del gasto de combustible contra el promedio histórico propio (agregación mensual por vehículo y categoría, y criterio de desvío).
 - Estimación del próximo mantenimiento por plan: último `gastos.kilometraje` del plan + `intervalo_km`, comparado contra el kilometraje actual.
-- Heurística "reparar o reemplazar" sobre gasto acumulado y kilometraje.
+- Orientación sobre "reparar o reemplazar" sobre gasto acumulado y kilometraje.
 
 ### 5.3 Decisiones que se mantienen
 
 - **Gastos en una única tabla** con referencia a la categoría, en vez de una tabla por categoría: todas comparten los mismos atributos y los indicadores se resuelven agrupando por categoría.
 - **Sin campos específicos por categoría** (litros o precio por litro en combustible): ninguna funcionalidad del MVP los requiere; el costo por km usa el monto total.
 - **El kilometraje no se exige en cada gasto**: se mantiene la decisión original de no depender de que el usuario cargue el odómetro en cada gasto, dado que los datos históricos pueden ser incompletos. `gastos.kilometraje` es opcional y solo es obligatorio cuando el gasto se marca como cumplimiento de un plan, que es el único caso en que el dato es necesario.
-- **Heurística "reparar o reemplazar"** se resuelve con los datos ya modelados, sin campos adicionales. Se excluyen explícitamente valor de mercado y tasación.
+- La **Orientación sobre "reparar o reemplazar"** se resuelve con los datos ya modelados, sin campos adicionales. Se excluyen explícitamente valor de mercado y tasación.
 
 ### 5.4 Decisiones técnicas
 
@@ -270,5 +270,5 @@ PostgreSQL crea automáticamente un índice por cada `PRIMARY KEY` y `UNIQUE`. E
 | Diferenciar gastos fijos de variables | `categorias_gasto.tipo_costo` |
 | Comparación de combustible vs. promedio histórico propio | `gastos` filtrado por la categoría `combustible`, agrupado por `vehiculo_id` y mes |
 | Estimación de próximo mantenimiento por kilometraje | `planes_mantenimiento.intervalo_km` + último `gastos.kilometraje` del plan + última lectura |
-| Heurística "reparar o reemplazar" | Agregaciones sobre `gastos`, `lecturas_kilometraje` y `vehiculos`, sin datos externos |
+| Orientación sobre "reparar o reemplazar" | Agregaciones sobre `gastos`, `lecturas_kilometraje` y `vehiculos`, sin datos externos |
 | Reglas de integridad | Restricciones `CHECK`, `UNIQUE`, `FK` en `schema.sql`, más validaciones de las capas superiores (sección 6) |

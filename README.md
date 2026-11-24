@@ -25,21 +25,38 @@ Gabriela Machin - gabrielamachin@gmail.com
 - **Usuario propietario**: Registra vehículos y gastos, visualiza indicadores
 - **Sistema**: Genera alertas y cálculos automáticos
 
+## Entrega del proyecto
+
+- [Video de presentación](URL_DEL_VIDEO)
+- [Informe PDF](URL_DEL_INFORME_PDF)
+
 ---
 
 ## Documentación detallada
 
-La documentación más completa del proyecto se encuentra en la carpeta [docs](docs/), donde se incluyen el alcance, la arquitectura, el stack tecnológico, la viabilidad, el plan de trabajo y otros aspectos relevantes del desarrollo.
+La documentación técnica se encuentra en [docs](docs/):
+
+- [Alcance](docs/alcance.md)
+- [Arquitectura](docs/arquitectura.md)
+- [Módulos](docs/modulos.md)
+- [Stack](docs/stack.md)
+- [Esquema de base de datos](docs/esquema-db.md)
+- [Pruebas](docs/testing.md)
+- [Despliegue en Render](docs/despliegue-render.md)
+- [Viabilidad](docs/viabilidad.md)
+- [Plan de trabajo](docs/plan-de-trabajo.md)
 
 ---
 
 ## Stack tecnológico
 
 ### Frontend
-- React 18.x — Librería UI
-- TypeScript 5.x — Tipado estático
-- Vite 5.x — Build tool
-- Tailwind CSS 3.x — Estilos
+- React 19 — Librería UI
+- TypeScript 5.7 — Tipado estático
+- Vite 6 — Build tool
+- Tailwind CSS 4 — Estilos
+- React Router 7 — Enrutamiento
+- Playwright — Pruebas E2E
 
 ### Backend
 - Python 3.10+ — Lenguaje
@@ -68,4 +85,4 @@ El proyecto incluye un Blueprint en [render.yaml](render.yaml) para crear:
 
 La aplicación se instala como PWA desde navegadores compatibles mediante el botón **Instalar aplicación** del navegador. Los activos de la interfaz se almacenan en caché y las rutas internas usan `index.html` como fallback.
 
-Consulta la guía detallada de [despliegue en Render y configuración PWA](docs/despliegue-render.md).
+Consultar la guía detallada de [despliegue en Render y configuración PWA](docs/despliegue-render.md).
