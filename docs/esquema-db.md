@@ -6,7 +6,7 @@
 
 ## 1. Tecnología
 
-La aplicación utiliza PostgreSQL 15+ como motor de base de datos relacional. El esquema completo (tablas, restricciones, índices y datos iniciales del catálogo de categorías) se encuentra en [database/schema.sql](../database/schema.sql).
+La aplicación utiliza PostgreSQL como motor de base de datos relacional. El CI usa PostgreSQL 16 y el despliegue usa una instancia administrada. El esquema completo (tablas, restricciones, índices y datos iniciales del catálogo de categorías) se encuentra en [database/schema.sql](../database/schema.sql). En desarrollo se puede usar PostgreSQL 15 o posterior.
 
 ## 2. Diagrama entidad-relación
 

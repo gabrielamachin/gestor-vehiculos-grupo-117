@@ -1,67 +1,64 @@
-# Definición del stack tecnológico
+# Stack tecnológico
 
-> En este documento se detalla la selección y justificación de las tecnologías utilizadas en el proyecto.
+## Resumen
 
----
+| Componente | Tecnología | Uso |
+|---|---|---|
+| Frontend | React 19, TypeScript 5.7, Vite 6 | PWA, rutas, formularios y dashboard |
+| Estilos | Tailwind CSS 4 | Diseño responsive y tema claro/oscuro |
+| Backend | Python 3.12, FastAPI | API REST, validación y lógica de negocio |
+| Persistencia | PostgreSQL 16 en desarrollo/CI; PostgreSQL administrado en producción | Modelo relacional |
+| ORM/DB | SQLAlchemy 2, psycopg2 | Mapeo y sesiones de base de datos |
+| Autenticación | JWT firmado con PyJWT y cookie HttpOnly | Sesiones de navegador y clientes HTTP |
+| Pruebas | pytest, HTTPX y Playwright | Backend, integración y navegador |
+| CI | GitHub Actions | Lint, build, backend y E2E |
+| Despliegue | Render Blueprint | API, frontend PWA y PostgreSQL |
 
-## Stack completo
+Las versiones mínimas declaradas por los requisitos son FastAPI 0.109, Pydantic 2.5, SQLAlchemy 2.0, psycopg2 2.9 y Python 3.12 en CI/despliegue. Los valores reales se fijan con `backend/requirements.txt` y `frontend/package-lock.json`.
 
-### Frontend
+## Frontend
 
-**React con TypeScript**
-- *Versión*: React 18.x + TypeScript 5.x
-- *Propósito*: Framework UI con tipado estático
-- *Justificación*: 
-  - React permite construir interfaces de usuario interactivas y modulares.
-  - TypeScript agrega tipado estático que reduce errores en tiempo de ejecución.
-  - Gran ecosistema de librerías y componentes.
-  - Experiencia del equipo en ambas tecnologías.
-  - Es recomendable para manejar el estado de la aplicación y renderizar dashboards con datos dinámicos.
+- **React 19** y **TypeScript**: componentes tipados y composición por funcionalidades.
+- **React Router 7**: rutas públicas y protegidas.
+- **Vite 6**: servidor de desarrollo, proxy `/api` y compilación.
+- **Tailwind CSS 4**: estilos utilitarios y responsive.
+- **vite-plugin-pwa**: manifiesto, service worker y actualización automática.
+- **Lexend**: tipografía cargada localmente mediante `@fontsource-variable`.
+- **Playwright**: pruebas automatizadas de interfaz en Chromium.
 
-### Backend
+El frontend no guarda el usuario ni el token en `localStorage`. Envía las solicitudes a `/api` y utiliza la cookie HttpOnly `gestor_sesion`; Swagger y clientes externos pueden usar el header `Authorization: Bearer <token>`.
 
-**Python con FastAPI**
-- *Versión*: Python 3.10+ / FastAPI 0.109+
-- *Propósito*: Framework web para construir la API REST
-- *Justificación*:
-  - FastAPI es async nativo, ideal para operaciones de I/O como consultas a BD
-  - Documentación automática con Swagger/OpenAPI (para facilitar testing y frontend)
-  - Tipado fuerte con Pydantic (validación automática de datos)
-  - Alto rendimiento y baja latencia
-  - Python tiene un ecosistema maduro para procesamiento de datos (cálculo de costo por km, promedios, alertas)
-  - Curva de aprendizaje baja, buena documentación disponible
+## Backend
 
-### Base de datos
+- **FastAPI**: routers REST y documentación OpenAPI.
+- **Pydantic 2**: validación de entrada y serialización de salida.
+- **SQLAlchemy 2**: modelos y sesiones. El esquema no se crea con `create_all`.
+- **PostgreSQL**: restricciones, claves foráneas, transacciones e índices.
+- **bcrypt**: hash de contraseñas.
+- **PyJWT**: creación y validación de tokens.
+- **pydantic-settings**: carga de variables de entorno y archivo `.env`.
 
-**PostgreSQL**
-- *Versión*: 15+
-- *Propósito*: Base de datos relacional
-- *Justificación*:
-  - Los datos son inherentemente relacionales (usuario → vehículos → gastos)
-  - Soporte ACID para transacciones (importante al registrar gastos y actualizar promedios)
-  - Es una buena alternativa para consultas agregadas (SUM, AVG) necesarias para el cálculo de costo por km
-  - Soporte nativo para UUID (identificadores únicos)
-  - Amplio soporte ORM con SQLAlchemy
-  - Escalable y confiable
+Cada módulo sigue la estructura `router -> service -> repository -> SQLAlchemy`, salvo indicadores, que calcula datos sobre los servicios de otros módulos.
 
-### Pruebas end-to-end
+## Persistencia
 
-**Playwright con TypeScript**
-- *Versión*: Playwright Test 1.65+
-- *Propósito*: Automatizar recorridos completos de usuario en un navegador real (Chromium)
-- *Justificación*:
-  - Verifica en conjunto la interfaz, la API y la persistencia, complementando las pruebas unitarias y de integración del backend.
-  - Permite comprobar flujos críticos, aislamiento entre usuarios y comportamiento responsive.
-  - Genera informes HTML, capturas y trazas para investigar fallos.
-  - La configuración inicia el frontend y el backend y utiliza una base PostgreSQL exclusiva para E2E, que se prepara con el esquema y datos de demo.
+El esquema se administra con `database/schema.sql`. Durante el arranque el backend no altera automáticamente las tablas: `python -m scripts.inicializar_bd` crea el esquema únicamente si todavía no existe la tabla `usuarios`. Los scripts de reinicio están protegidos para bases cuyo nombre contenga `test` o `e2e`.
 
----
+## Pruebas
 
-## Despliegue e infraestructura
+- `pytest` ejecuta pruebas unitarias, de servicio, API e integración del backend.
+- PostgreSQL exclusivo separa las pruebas de integración de la base de desarrollo.
+- Playwright inicia un servidor API y uno frontend aislados y usa una base PostgreSQL exclusiva de E2E.
 
-La infraestructura del proyecto se centraliza íntegramente en **Render**, simplificando la operación y el monitoreo:
+La estrategia y los comandos completos están documentados en [testing.md](testing.md).
 
-- **Frontend:** Render Static Site con auto-deploy desde la rama principal del repositorio de GitHub.
-- **Backend:** Render Web Service ejecutando FastAPI mediante entorno virtual de Python y servidor ASGI Uvicorn.
-- **Base de Datos:** PostgreSQL administrado provisto por Render (15+), con conexión interna privada entre el Web Service y la base de datos para minimizar la latencia de red.
-- **Estrategia ante el Free Tier (Spin Down):** Al operar sobre instancias de nivel gratuito que entran en reposo tras 15 minutos de inactividad, se implementará un endpoint liviano de `/health` consumido periódicamente para asegurar disponibilidad inmediata durante las demostraciones.
+## Infraestructura
+
+El archivo `render.yaml` crea:
+
+- una base PostgreSQL administrada;
+- un Web Service Python para FastAPI;
+- un Static Site para el frontend PWA;
+- una reescritura `/api/*` desde el frontend hacia el backend.
+
+El plan gratuito puede suspender servicios por inactividad. `/health` permite comprobaciones livianas y `/health/db` verifica que la API pueda consultar PostgreSQL.

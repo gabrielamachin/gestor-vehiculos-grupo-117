@@ -21,7 +21,10 @@
 
 ## Verificado
 
-- [ ] 
+- [ ] Backend: `cd backend && python -m pytest`
+- [ ] Frontend: `cd frontend && npm run lint`
+- [ ] Build: `cd frontend && npm run build`
+- [ ] E2E: `cd frontend && npm run test:e2e`
 
 ## Pendiente
 

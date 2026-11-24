@@ -1,48 +1,74 @@
-# Despliegue en Render y PWA
+# Despliegue en Render
 
-## Servicios
+## Blueprint
 
-El archivo `render.yaml` define una arquitectura de tres componentes:
+`render.yaml` define tres recursos:
 
-1. PostgreSQL administrada (`gestor-vehiculos-db`).
-2. API FastAPI (`gestor-vehiculos-api`) en un Web Service.
-3. Frontend React/Vite (`gestor-vehiculos-web`) en un Static Site.
+| Recurso | Nombre | Tipo |
+|---|---|---|
+| Base de datos | `gestor-vehiculos-db` | PostgreSQL free |
+| API | `gestor-vehiculos-api` | Web Service Python |
+| Frontend | `gestor-vehiculos-web` | Static Site |
 
-## Publicación inicial
+## Configuración del backend
 
-1. Conectar el repositorio en **New > Blueprint**.
-2. Revisar los nombres y regiones de los servicios antes de aplicar.
-3. Aplicar el Blueprint y esperar el build inicial.
-4. Abrir `/health/db` del backend para verificar la conexión con PostgreSQL.
-5. Abrir el sitio estático y ejecutar un registro o inicio de sesión de prueba.
+Build:
 
-## Variables de entorno
+```bash
+cd backend && pip install -r requirements.txt
+```
 
-El backend usa:
+Inicio:
 
-| Variable | Uso |
+```bash
+cd backend && python -m scripts.inicializar_bd && uvicorn app.main:app --host 0.0.0.0 --port $PORT
+```
+
+El health check configurado es `/health/db`.
+
+Variables:
+
+| Variable | Valor |
 |---|---|
-| `DATABASE_URL` | URL interna de PostgreSQL obtenida de la base administrada. |
-| `JWT_SECRET` | Secreto generado por Render para firmar tokens JWT. |
-| `JWT_EXPIRE_MINUTES` | Duración de los tokens, 60 minutos por defecto. |
-| `CORS_ORIGINS` | URL HTTPS exacta del frontend. |
-| `COOKIE_SECURE` | Debe ser `true` en producción HTTPS. |
+| `DATABASE_URL` | Conexión a PostgreSQL administrada por Render |
+| `JWT_SECRET` | Valor generado por Render |
+| `JWT_EXPIRE_MINUTES` | `60` |
+| `CORS_ORIGINS` | URL HTTPS del frontend |
+| `COOKIE_SECURE` | `true` |
+| `PYTHON_VERSION` | `3.12.0` |
 
-El frontend usa `VITE_API_URL=/api`. Durante el build, Render reescribe `/api/*` hacia el servicio FastAPI.
+## Configuración del frontend
 
-## Base de datos
+Build:
 
-Al iniciar el backend se ejecuta `python -m scripts.inicializar_bd`. Ese script crea el esquema solamente si todavía no existe la tabla `usuarios`; no elimina datos. Para preparar una base de pruebas, el script `reiniciar_bd` sigue limitado a bases cuyo nombre contenga `test` o `e2e`.
+```bash
+cd frontend && npm ci && npm run build
+```
+
+`VITE_API_URL` se establece en `/api`. Las rutas `/api/*` se reescriben al servicio `gestor-vehiculos-api`. Las demás rutas se reescriben a `/index.html` para React Router.
+
+## Publicación
+
+1. En Render, elegir **New > Blueprint** y conectar el repositorio.
+2. Crear o confirmar los tres recursos.
+3. Esperar la instalación de Python, npm y la compilación PWA.
+4. Verificar `https://gestor-vehiculos-api.onrender.com/health`.
+5. Verificar `https://gestor-vehiculos-api.onrender.com/health/db`.
+6. Abrir el frontend y probar registro, login y creación de un vehículo.
+
+Si las URL cambian, actualizar `CORS_ORIGINS` y las reescrituras de `render.yaml`.
+
+## Inicialización de datos
+
+`inicializar_bd.py` usa `database/schema.sql` solo si la tabla `usuarios` aún no existe. No recrea ni borra datos en una base ya inicializada.
+
+Los scripts `reiniciar_bd.py` y `cargar_datos_demo.py` están destinados a bases de prueba. El reinicio rechaza una base cuyo nombre no contenga `test` o `e2e`.
 
 ## PWA
 
-El plugin `vite-plugin-pwa` genera el manifiesto y el service worker durante `npm run build`. La aplicación usa actualización automática, modo `standalone`, caché de recursos estáticos y fallback de rutas a `index.html`.
+La compilación genera el manifiesto y el service worker mediante `vite-plugin-pwa`. Funciona con actualización automática y modo `standalone`.
 
-Después de publicar:
-
-1. Abrir el sitio por HTTPS.
-2. Verificar en DevTools > Application > Manifest que el nombre, icono y `start_url` sean correctos.
-3. Verificar que el service worker esté activo.
-4. Probar el funcionamiento básico sin red después de haber cargado la aplicación.
-
-La API no se incluye en la caché offline: el frontend solo almacena los activos locales necesarios para abrir la interfaz.
+- Las rutas locales tienen fallback a `index.html`.
+- Los activos locales pueden conservarse en caché.
+- Las solicitudes de API no forman parte de una política offline.
+- El entorno público debe usar HTTPS para que las cookies y PWA funcionen correctamente.
