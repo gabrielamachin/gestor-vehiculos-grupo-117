@@ -25,6 +25,11 @@ Gabriela Machin - gabrielamachin@gmail.com
 - **Usuario propietario**: Registra vehículos y gastos, visualiza indicadores
 - **Sistema**: Genera alertas y cálculos automáticos
 
+## Entrega del proyecto
+
+- [Video de presentación](URL_DEL_VIDEO)
+- [Informe PDF](URL_DEL_INFORME_PDF)
+
 ---
 
 ## Documentación detallada
