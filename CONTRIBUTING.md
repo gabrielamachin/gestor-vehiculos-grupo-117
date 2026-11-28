@@ -1,6 +1,6 @@
 # Cómo contribuir
 
-Guía para sumar cambios al proyecto sin pisarnos entre integrantes. Describe el flujo que ya se usa en el historial del repositorio: cada persona trabaja en **su fork**, en una **rama por cambio**, y lo propone con un **pull request (PR)** hacia `main` del repositorio principal.
+Guía para sumar cambios al proyecto sin pisarnos entre integrantes. Describe el flujo que ya se usa en el historial del repositorio: cada persona trabaja en una **rama por cambio** dentro del repositorio compartido y lo propone con un **pull request (PR)** hacia `main`.
 
 > La regla de oro: **nadie sube directo a `main`**. Todo cambio entra por un PR.
 
@@ -8,22 +8,17 @@ Guía para sumar cambios al proyecto sin pisarnos entre integrantes. Describe el
 
 ## 1. Preparación (una sola vez)
 
-1. Hacer un **fork** del repositorio principal desde GitHub (botón **Fork**, arriba a la derecha). Crea una copia en tu cuenta; podés romperla sin afectar al resto.
-2. Clonar **tu fork** (no el principal):
+1. Pedir que te agreguen como colaboradora del repositorio (**Settings → Collaborators**), si todavía no tenés permiso de escritura.
+2. Clonar el repositorio:
 
    ```bash
-   git clone https://github.com/TU_USUARIO/gestor-vehiculos-prueba.git
-   cd gestor-vehiculos-prueba
+   git clone https://github.com/gabrielamachin/gestor-vehiculos-grupo-117.git
+   cd gestor-vehiculos-grupo-117
    ```
 
-3. Agregar el repositorio principal como `upstream`, para poder traer los cambios de las demás:
+3. Poner el proyecto en marcha en tu computadora: [backend](backend/README.md) y [frontend](frontend/README.md).
 
-   ```bash
-   git remote add upstream https://github.com/CamilaRL1/gestor-vehiculos-prueba.git
-   git remote -v    # debe mostrar origin (tu fork) y upstream (el principal)
-   ```
-
-4. Poner el proyecto en marcha en tu computadora: [backend](backend/README.md) y [frontend](frontend/README.md).
+> Si no tenés permiso de escritura y no podés conseguirlo, ver la sección 5 (trabajo con fork).
 
 ---
 
@@ -33,8 +28,7 @@ Guía para sumar cambios al proyecto sin pisarnos entre integrantes. Describe el
 
 ```bash
 git checkout main
-git pull upstream main      # trae lo que las demás ya fusionaron
-git push origin main        # opcional: deja tu fork al día
+git pull origin main      # trae lo que las demás ya fusionaron
 ```
 
 ### 2.2. Crear una rama nueva
@@ -80,7 +74,7 @@ Correr las mismas comprobaciones que hará la integración continua (también es
 | Interfaz o flujos completos | `cd frontend && npm run test:e2e` (ver [frontend/e2e/README.md](frontend/e2e/README.md)) |
 | Solo documentación | Releer el diff y comprobar que los enlaces funcionan |
 
-### 2.5. Subir la rama a tu fork
+### 2.5. Subir la rama
 
 ```bash
 git push -u origin docs/nombre-del-cambio
@@ -88,10 +82,11 @@ git push -u origin docs/nombre-del-cambio
 
 ### 2.6. Abrir el pull request
 
-1. En GitHub, entrar a tu fork: aparece un cartel **Compare & pull request**.
-2. Verificar que diga **base repository: CamilaRL1/gestor-vehiculos-prueba**, **base: main**, y como origen tu rama.
+1. En GitHub, entrar al repositorio: aparece un cartel **Compare & pull request** para tu rama.
+2. Verificar que diga **base: main** y como origen tu rama.
 3. Completar la plantilla (resumen, cambios, cómo probar, qué verificaste).
 4. Crear el PR. Se ejecuta la CI automáticamente: esperá a que termine en verde. Si falla, corregí en la misma rama y volvé a hacer `git push`; el PR se actualiza solo.
+5. Pedir la revisión de una compañera en **Reviewers**.
 
 ### 2.7. Después de la revisión
 
@@ -111,12 +106,13 @@ git push -u origin docs/nombre-del-cambio
 - **No mezclar cambios no relacionados** (por ejemplo, un arreglo de backend con un cambio de estilos).
 - **No reformatear archivos que no tocaste.** Genera conflictos y ruido en la revisión.
 - **Antes de empezar algo grande**, avisar al grupo o abrir un *issue*, para evitar que dos personas hagan lo mismo.
+- **No fusionar tu propio PR**: lo revisa y lo acepta otra persona del equipo.
 - **Si dos PRs tocan el mismo archivo**, el segundo en fusionarse debe actualizar su rama:
 
   ```bash
   git checkout mi-rama
-  git fetch upstream
-  git merge upstream/main    # resolver conflictos si aparecen, luego commit y push
+  git fetch origin
+  git merge origin/main    # resolver conflictos si aparecen, luego commit y push
   ```
 
 - **Actualizar [CHANGELOG.md](CHANGELOG.md)** bajo `[Unreleased]` cuando el cambio sea visible para el equipo o para la entrega.
@@ -126,3 +122,17 @@ git push -u origin docs/nombre-del-cambio
 
 - Backend: ver "Convenciones al agregar un módulo" en [backend/README.md](backend/README.md) y la arquitectura en [docs/arquitectura.md](docs/arquitectura.md).
 - Frontend: ver "Convenciones" en [frontend/README.md](frontend/README.md).
+
+## 5. Si no tenés permiso de escritura (trabajo con fork)
+
+Si no sos colaboradora del repositorio, podés proponer cambios desde una copia propia:
+
+1. Hacer un **fork** desde GitHub (botón **Fork**) y clonar tu fork.
+2. Agregar el repositorio principal como `upstream`:
+
+   ```bash
+   git remote add upstream https://github.com/gabrielamachin/gestor-vehiculos-grupo-117.git
+   ```
+
+3. Antes de cada rama, traer lo último: `git pull upstream main` (o **Sync fork** en GitHub).
+4. Trabajar igual que en la sección 2, pero subiendo la rama a tu fork (`origin`) y abriendo el PR hacia `main` del repositorio principal.
