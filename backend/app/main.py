@@ -5,7 +5,7 @@ from app.core import health
 from app.core.config import get_settings
 from app.core.errors import registrar_manejadores
 from app.usuarios.router import router as usuarios_router
-from app.vehiculos.router import router as vehiculos_router 
+from app.vehiculos.router import router as vehiculos_router
 from app.kilometraje.router import router as kilometraje_router
 from app.categorias.router import router as categorias_router
 from app.mantenimiento.router import router as mantenimiento_router
@@ -18,8 +18,9 @@ def crear_app() -> FastAPI:
 
     app = FastAPI(title="Gestor Inteligente de Vehículos", version="0.1.0")
 
-    # CORS con la URL exacta del frontend (variable CORS_ORIGINS). El JWT viaja en el
-    # header Authorization, no en cookies, por eso no se habilitan credenciales.
+    # CORS con la URL exacta del frontend (variable CORS_ORIGINS). La sesión del navegador
+    # usa una cookie HttpOnly del mismo origen (ver core/security.py), por eso no se habilitan
+    # credenciales. El header Authorization lo usan Swagger, los tests y otros clientes.
     app.add_middleware(
         CORSMiddleware,
         allow_origins=settings.cors_origins_lista,
