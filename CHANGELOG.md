@@ -2,9 +2,11 @@
 
 > Este proyecto sigue el formato [Keep a Changelog](https://keepachangelog.com/es-ES/1.0.0/) y el versionado [Semantic Versioning](https://semver.org/lang/es/). Este documento mantiene el historial real de decisiones y evolución del proyecto.
 
+- Actualizado `frontend/README.md`: estructura real de `src/` (módulos de dominio, `shared/mensajes` y `shared/formato.ts`), scripts de pruebas E2E y aclaración de que `localStorage` solo guarda la preferencia de tema, no el token.
 ---
 
 ## [Unreleased]
+- Incorporado `CONTRIBUTING.md` con el flujo de trabajo del equipo (fork, rama por cambio, commits con formato `tipo(alcance): descripción` y pull request), las verificaciones previas al PR y las convenciones para evitar conflictos entre integrantes.
 
 ### Added
 - Incorporada una suite de pruebas end-to-end con Playwright Test y Chromium para validar autenticación, flujos de vehículos/kilometraje/gastos, aislamiento entre usuarios, indicadores y diseño responsive. La configuración inicia frontend y backend, prepara una base PostgreSQL E2E y conserva informes, capturas y trazas; el detalle está en `frontend/e2e/README.md`.
